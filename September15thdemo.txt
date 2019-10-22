@@ -1,0 +1,1832 @@
+=============================================================================================
+Mithun Technologies          +91-9980923226/+91-8296242028        devopstrainingblr@gmail.com
+=============================================================================================
+
+
+
+Welcome to Mithun Technologies
+------------------------------
+
+Monolothic Artch --> No need use Docker
+
+Mirco Services Artch --> Docker 
+
+AWS/GCP/IBm Cloud
+
+EC2
+ELB
+S3
+VPC
+
+
+Linux Commands 150+  -- 15 Hours
+
+Shell Scripts -- 10 Hours
+
+Git, GitHub, Gitlab, BitBucket --> 10 Hours
+
+Build Tools
+Maven           - 5 Hours
+
+Tomcat --> 4
+
+Apache HTTP server - 2 Hurs
+
+SonarQube Server - 5 - 6 Hours
+
+Nexus Server - 4 Hours
+
+Jenkins - 14 - 16 Hours - Free Stype, Maven - Pipeline Script  (Groovy)
+MS,
+
+Docker - 12 - 14 Hours - Docker Net, Docker, DSW
+
+Kubernets - 10 - 12
+
+Ansible - 10 -11  - YAML Script 
+
+AWS - 10 - 11 Services- 
+
+New Relic Monitoring - 1.5 to 2 Hours
+
+
+Soft Copy --
+Interview Questions -
+
+Instllatoin Videos
+
+SOm important Videos
+
+
+Pay once - 
+
+
+100 % Job - 
+
+Onlie Class Timings
+Saturday And Sunday
+6 AM to 8 AM IST - 2 Hours
+7 PM to 9 PM IST - 2 Hours
+
+
+Class Room Trainings - Bangalore - Maratha Halli
+
+Weekdays 
+
+7.30 AM to 9 AM
+
+9.15 AM to 10.45 AM
+
+
+
+Next Online class will satart on 21st 6 Am IST
+
+
+
+21st 9 AM class room trainig
+
+
+
+Linux Commands - 21st 6 AM IST - Mithun Technologies - 9980923226
+-----------------------------------------------------------------  
+
+
+
+SSH Tool
+--------
+Putty
+Super Putty 
+
+Winods OS
+
+We can connect to the server and we can execute the commands.
+
+
+CLI --> Terminal
+
+
+FTP Tools
+---------
+WinSCP --> Windos OS
+FileZilla --> W/M/L
+
+
+Linux is a OS (Open SOurce)
+
+Diff b/w free and OS?
+
+
+ls
+mkdir
+
+LS --> X
+MKDIR --> X
+
+
+Linux FIle Structure / Dir Structure
+-------------------------------------
+
+                      / --> root Directory 
+-home        
+  mithun
+  ruthvik
+ /home/mithun --> Mithun User Home Directory
+ /home/ruthvik --> ruthvik user HD.
+ 
+-bin
+  ls
+  mkdir
+  
+-sbin  
+  restart
+  reboot
+  shutdown
+ 
+Admin user/ super - root  				  
+N no of Normal users	- mithun, ruthvik
+
+System Users --> Apache HTTP sever -> apache 
+                 jenkins -- > jenkins
+
+-etc
+  sudoers
+  groups
+  shadow
+  passwd
+  motd --> Message Of The Day
+
+-opt
+  maven
+  tomcat
+  sonarqube
+  nexus
+ 
+-dev
+  
+-proc
+
+-lib
+  
+-tmp
+
+
+AWS
+---
+
+Step1) Create a account in AWS.
+
+https://console.aws.amazon.com/
+
+Visa CC/DC - 2 INR
+
+12 Months free*
+
+EC2 Instance / VM --> 750 Hours
+
+Step2) Create a EC2 Instance
+
+30 GB HD
+
+Step3) Convert PEM file to PPK and connect to the server.
+
+
+
+mkdir test
+
+mkdir -v DevOps
+
+
+DevOps
+  LinuxCOmmands
+       ShellScript
+	       Git
+		    maven
+			
+mkdir -p 	DevOps/LinuxCOmmands/ShellScript/Git/maven/	
+			
+mkdir DevOps/LinuxCOmmands/ShellScript/Git/maven/tomcat
+  
+  . --> hidden dir/file
+  
+  .bash_profile --> hiddenfile
+  .ssh --> hidden dir
+  
+What is Inode number?
+DS
+
+Permissions
+Size
+GN
+OW
+Time
+
+FileName/Directory name
+
+ec2-user
+
+/home/ec2-user
+
+
+cd ~ OR cd
+
+pwd
+
+ls
+
+RHEL/Centos/fedora --> 7.6
+
+yum install tree -y
+
+
+sudo su - (OR) sudo -i
+
+Ubuntu
+apt
+apt-get
+
+  
+ exit 
+  
+  
+mithun
+
+/home/mithun --> mithun user HD
+
+
+What is the root user HD?
+
+a) /
+b) /ROOT
+c) /home/root
+d) /root
+e) N Above
+
+
+
+/ --> Root directory
+
+/root --> root user hD
+
+
+touch mithun.sh
+
+
+
+devops.txt
+
+Display all empty files in current directory?
+
+find . -type f -empty
+
+Display all empty dirs in current directory?
+
+find . -type d -empty
+
+find /tmp/ -type d -empty
+
+
+find ~ -name mithun.sh
+
+
+               umask    defalut dir per      defaulut file permis
+
+ root           0022    0755                  0644
+
+ normal user    0002    0775                  0664          
+
+
+
+Base permissions for dir is 0777
+                            0002
+							----
+							0775
+
+
+Base permissions for file is 0666
+                             0002
+							 ----
+							 0664
+
+U   G    O 
+rwx rwx r-x   2 ec2-user ec2-user  37 Sep 22 00:46 devops
+ 7   7  5
+rw- rw- r-- 1 ec2-user ec2-user   0 Sep 22 00:45 test.txt
+6    6  4
+
+rwx r-x r-x 2 root root    6 Sep 22 01:05 mss
+7    5   5
+
+rw- r-- r-- 1 root root    0 Sep 22 01:06 mss.txt
+6.   4.  4
+
+r --> 4
+w --> 2
+x --> 1
+
+umask --> It will display the umask value
+      0666
+umask 0222
+
+
+
+~/.bash_profile
+
+umask 0222
+
+
+chmod 777 devops.txt
+
+chmod 555 devops.txt
+
+chmod 741 devops.txt	
+
+chmod ugo+r devops
+chmod +r devops
+
+chmod -rw devops.txt
+
+	  
+rwx r-- --x
+rwx r-- --x					  
+
+all per -- U
+r per  -- G
+x per  -- O
+
+741
+
+chown root devops.txt
+
+
+sudo su -
+
+sudo su 
+
+
+
+
+chown
+
+chgrp
+
+
+chown root:wheel fn/d
+
+
+
+ln 
+
+
+mithun
+
+/home/mithun
+
+mss.txt
+
+
+Hard Link
+----------
+ln mss.txt /tmp/lntest.txt
+
+SoftLink
+--------
+ln -s mss.txt msssoft.txt
+
+
+
+
+a --> b --> c
+
+touch
+
+scnerio1
+
+vi or vim
+vi devops.txt
+
+press the i key --> INSERT mode
+
+
+
+press the  esc button, then :wq
+
+2
+vi devops.txt
+
+Prese i --> INSERT mode
+
+press esc, then :q!
+
+3
+
+vi devops.txt
+
+:q
+
+yum install vim -y
+
+
+nano fn
+
+Hello...
+
+Ctrl + O --> Save
+
+Ctrl + x --> Close
+
+
+touch
+vi
+vim
+nano
+
+
+
+Ctrl + c --> Terminate the process
+
+Ctrl + d --> Suspned the process
+
+
+
+friends.txt
+
+red red red 
+
+red
+
+red red red red 
+
+
+blue
+
+sed "s/red/blue" friends.txt
+
+
+
+/home
+10 users are craeted in Lx 1
+/etc/passwd
+
+
+who
+
+w
+
+cat /proc/cpuinfo
+
+8
+
+LA -- 7.0
+
+2 power 32 - 20
+
+2 power 12
+
+
+2X2..2
+
+
+Ctrl + C
+
+Ctrl + d 
+
+
+
+Jenkins
+
+
+jenkins
+
+
+service sn options (status|start|stop|restart)
+
+
+service jenkins status
+
+
+
+W + r
+
+services.msc
+
+
+systemctl options sn
+
+
+1
+2
+3 --> core dumps
+
+9 --> kill 
+.
+.
+64
+
+
+zip -r devops.zip devops
+
+
+tar
+
+
+root -- super/admin user
+
+ec2-user -- > Normal user
+
+
+mithun
+passw0rd
+
+
+
+$passwd
+
+#passwd mithun
+
+Current Password
+password
+
+New Password : 
+Re type: 
+
+root user UID 1
+
+Normal users UIDs will start from RHEL 6.x - 500
+                                       7.x - 1000
+
+60 Days
+
+90 Days
+
+7 Dys
+
+14 days
+
+chage mithun
+
+group
+
+devops
+
+usermod -g devops mithun
+
+
+usermod -L mithun
+
+usermod -U mithun
+
+
+#visudo
+
+vi /etc/sudoers
+
+
+su  mithun
+
+RU --> NU -- No Password
+NU -> Ru -- root user password
+NU -- NU --> it will ask password
+
+
+
+enale the pass word authentication
+---------------------------------
+
+
+sudo su -
+
+vi /etc/ssh/sshd_config
+
+
+restart the service
+
+sshd
+
+service sshd restart
+
+
+
+
+13.126.159.117
+mithun
+passw0rd
+
+
+13.126.159.117
+manan
+passw0rd
+
+
+ssh manan@13.126.159.117
+
+ssh -i "mithuntechnologies.pem" ec2-user@ec2-13-127-14-56.ap-south-1.compute.amazonaws.com
+
+
+scp devops.txt ec2-user@2ndserverIp:/tmp/
+
+******
+
+scp devops.txt ec2-user@13.127.14.56:/tmp/
+
+
+
+
+
+crontab -l
+
+crontab -e
+
+crontab -r
+
+touch /etc/cron.allow
+
+
+*/1 * * * *  /home/ec2-user/date.sh > /home/ec2-user/dateopt.log 2>&1
+
+smtp server has to be installed..
+
+mail devopstrainingblr@gmail.com
+
+Test Mail
+
+ Hello Everyone,
+ 
+ ...
+ 
+ Regards,
+ Mithun SOftware Solutions.
+ 
+ Ctrl + d
+ 
+ 
+
+serverResourceMonitor.sh
+
+free
+df
+
+mail
+
+
+
+typescript
+
+
+
+tomcat - 8080
+jenkins - 8080
+Address Already inuse - Bind Exception
+
+netstat -tunlap
+
+
+
+
+
+sonarqube server - 9000
+nexus server - 8081
+
+
+
+date - 5 secs
+
+watch date
+
+
+exit (OR) logout (OR) ctrl + d
+
+
+Bash ShellScrit - 29 8 PM IST
+-----------------------------
+
+
+cat /etc/shells
+sh
+bash
+csh
+tcsh
+zsh
+
+
+All Linux OS
+
+bash
+
+sh
+
+AIX --> ksh
+
+
+date.sh
+
+echo "Hello Guys"
+echo "Today date is"
+date
+
+sh hello.sh
+
+
+
+cleanup.sh
+
+rm 
+find
+mail
+
+serverReourcesMonitor.sh
+
+Thresold=80
+free
+df
+top
+sed
+
+mail
+
+deploy.sh
+
+clear
+
+Power Script --> Windows
+
+CLS
+
+First Shell Script
+------------------
+vi hello.sh
+Press that  i  keyword --> INSERT mode
+
+#!/bin/sh --> shebang line
+
+echo "Hello Everyone"
+echo "Welcome to SH"
+
+set -x
+echo "Today date is"
+
+set +x
+
+date
+
+press esc, then :wq
+
+
+chmod u+x hello.sh
+
+
+./hello.sh
+
+. hello.sh
+
+sh hello.sh
+
+bash hello.sh
+
+ksh hello.sh
+
+
+cat /etc/shells
+
+
+
+sh -x hello.sh
+
+sh hello.sh
+
+255 Chars
+
+hello.sh
+Hello.sh
+
+Comments
+--------
+
+SLC
+#
+
+MLC
+<<Mithun
+cat hello.sh
+mkdit test
+cal
+date
+
+Mithun
+
+
+
+Varibales
+---------
+
+int a =10;
+
+
+a = 10
+a= 10
+a =10
+
+a=10
+
+
+System defined vars/ shell vars
+
+env/printenv
+
+Userdefined vars
+
+
+USER
+
+
+vi ~/.bash_profile
+
+export HISTSIZE=200
+
+
+pwd --> command
+
+Commandline Aruguments
+----------------------
+
+sh hello.sh
+
+sh dbbackup.sh dbname dbbloc 
+
+echo $# --> 2
+
+echo $0 --> sf name
+
+echo $1 -> 1st arg
+echo $2 --> 2nd arg
+
+echo $3 --> 3rd arg
+
+echo $* --> all the args
+echo $@ --> all the args
+
+echo $$ --> PID
+
+Date
+
+echo $? --> Previous cmd execution status
+
+0 --> sucess
+
+127 --> std error code for cmd not found
+
+
+
+-eq
+
+-lt
+-le
+-gt
+-ge
+
+String
+------
+
+String is a zero or more characters enclosed in a single(') or docuble(") quotes.
+
+''
+""
+'MithunSoftwareSolutions'
+
+string_var="Hi Team, My name is Mithun Reddy L, working in Mithun Software Solutions , Bangalore"
+
+echo $string_var --> Hi Team, My name is Mithun Reddy L, working in Mithun Software Solutions , Bangalore
+
+echo ${string_var} --> Hi Team, My name is Mithun Reddy L, working in Mithun Software Solutions , Bangalore
+
+echo ${#string_var}  --> length of var 
+
+
+echo ${string_var:20} --> Mithun Reddy L, working in Mithun Software Solutions , Bangalore
+
+echo ${string_var:20:14}  --> Mithun Reddy L
+
+
+echo ${string_var: -9} --> Bangalore
+
+
+
+
+A Operations
+-------------
+
+expr 2 + 3
+
+expr 2 - 3
+
+expr 2 \* 3
+
+expr 10 / 5
+
+expr 20 % 3
+
+echo "The addition of 2 and 3 is: " `expr 2 + 3`
+
+
+a=10
+
+
+read
+----
+
+
+echo "Please enter your name!"
+
+read name
+
+echo $name
+
+
+Write a one shellscript to perfrom the a ops .
+
+Note: Take the numbers as a input.
+
+sh aops.sh 2 3 
+sh aops.sh 10 20
+
+
+
+Please enter the first number
+10
+
+Please enter the second number
+
+20
+
+
+-------
+
+echo "please enter the DevOps tools"
+
+read devopstools
+
+echo "The DevOps which you have entered are: " $devopatools
+
+--------
+
+echo "please enter the DevOps tools"
+
+read -a devopstools
+
+echo "The DevOps which you have entered are: " ${devopatools[*]}
+
+
+echo "the 4th devops tools is: " ${devopatools[3]}
+
+----------
+echo "please enter the DevOps tools"
+
+read 
+
+echo "The DevOps which you have entered are: " $REPLY
+
+
+----------------
+
+Input and Output sybols
+
+----------------------
+
+
+> --> Redirect std output
+
+
+>> --> Append the std output
+
+
+< --> std input
+
+
+Fds
+---
+
+0 --> std input
+
+1 ---> std output
+
+2 ---> std error
+
+
+Contrl stements
+---------------
+
+
+if else condition statement
+
+C/C++ syntax
+------------
+if (condition)
+{
+---
+---
+---
+}
+else 
+{
+--
+--
+}
+
+
+Shell Script Syntax
+-------------------
+
+if [ Condition ]
+then
+---
+--
+--
+--
+else
+---
+--
+--
+fi
+
+
+a=10
+b=20
+
+if [ $a -gt $b ]
+then
+echo "$a is bigger than $b"
+else
+echo "$a is smaller than $b"
+fi
+
+------------------
+
+echo "Please enter the file name"
+
+read file
+
+if [ -f $file ]
+then
+echo $file is existed
+cat $file
+else
+echo $file is not existed
+touch $file
+echo $file is created...
+fi
+
+echo "if con demo over!!"
+
+--------------------------------
+chmod u+x fn
+
+sh fin
+
+for loop
+
+
+C/C++ SYntax
+------------
+
+for (initilation;condition;inc/dec opertator)
+{
+...
+......
+
+}
+
+
+Shell Script Syntax
+--------------------
+
+for (( ini;cond;inc/dec ))
+do
+---
+--
+--
+done
+
+
+Write shllscript to print 1 to 100.
+
+FileName: forloop.sh
+
+echo "For loop demo starts!!"
+
+for (( i=6; i<=100; i++ ))
+            1<=5  1++
+			2<=5  2++
+			3<=5  3++
+			4<=5. 4++
+			5<=5  5++
+			6<=5
+do
+
+echo $i
+
+done
+
+echo "For loop demo over.."
+
+
+sh forloop.sh 
+
+For loop demo starts!!
+1
+2
+3
+4
+5
+For loop demo over..
+
+Write shllscript to print 5 to 1.
+
+
+while loop
+----------
+
+C/C++ Syntax
+------------
+
+inition
+
+while (condition)
+{
+
+inc/dec
+
+}
+
+inition
+
+while (condition)
+do
+
+inc/dec
+
+done
+
+
+echo "while loop demo starts"
+
+i=5
+
+while [ $i -le 5 ]
+         1 < 5
+		 2 < 5
+		 3 < 5
+		 4 < 5
+		 5 <= 5
+do
+echo $i
+i=`expr $i + 1`
+        1 + 1
+		2 + 1
+		3 + 1
+		4 + 1
+		 
+done
+
+echo "while loop demo over"
+
+1
+2
+3
+4
+5
+
+switch case
+-----------
+
+sh sonar.sh stopping
+
+case $1 in
+
+start)
+      ...
+	  .. 
+	  ;;
+stop)
+     ...
+	 ...
+	 ... ;;
+restart)
+     ...
+	 ...
+	 ;; 	  
+
+*)
+....
+....
+
+esac
+
+Write shell sctipt using switch case.
+
+echo "Please enter the number 1 to 5 only"
+
+read num
+
+case $num in
+1)
+  echo "you have typed one"
+  echo "you have typed the correct number"
+  ;;
+2)
+  echo "you have typed two"
+  echo "you have typed the correct number"
+  ;;  
+3)
+  echo "you have typed three"
+  echo "you have typed the correct number"
+  ;;
+4)
+  echo "you have typed four"
+  echo "you have typed the correct number"
+  ;;
+five)
+  echo "you have typed five"
+  echo "you have typed the correct number"
+  ;;
+*)
+echo "INVALID NUMBER"
+echo "Type the corect number from 1 to 5 only"
+;;
+
+esac
+
+Functions
+---------
+
+
+stringUtility()
+{
+......
+......
+......
+......
+}
+
+...........
+stringUtility
+...........
+...........
+...........
+stringUtility
+...........
+...........
+...........
+stringUtility
+...........
+...........
+...........
+stringUtility
+...........
+...........
+...........
+
+
+vi functiondemo.sh
+
+echo "Function demo starts.."
+
+greetingfunction()
+{
+echo"Good Morning/Evening/Afternoon"
+echo "I am inside greetingfunction"
+
+}
+
+
+echo "Functions are very useful for resuing the code"
+
+echo "calling the greetingfunction"
+
+
+
+add()
+sub()
+
+
+vi utilities.sh
+
+add()
+{
+echo "add function"
+}
+sub()
+{
+echo "sub function"
+}
+
+
+vi usage.sh
+
+source utilities.sh
+add
+sub
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GitHub Administartion     Mithun Technlogies    +91-9980923226
+---------------------     ------------------    --------------
+
+
+GitHub
+
+- create a org --> https://github.com/mss-ep
+- Create a repo --> https://github.com/mss-ep/flipkart.git
+- create a team --> 
+- add the users into that team
+- provide the access team to repo
+
+
+Git Commands
+-------------
+
+git init 
+
+(Untracked Files)      (Tracked files)
+Working Area           Staging Area            Local Repo         Remote Repo
+
+                                               DBUtils.java
+                                               Users.java
+                     
+
+git status
+
+git add .
+git add *
+
+git add f1 f2
+
+
+git commit -m "First Commit"  f1 f2
+
+
+git config --global user.name "Mithun Technologies"
+git config --global user.email "devopstrainingblr@gmail.com"
+
+
+git remote add fr https://github.com/mss-ep/flipkart.git
+
+
+ command AN. Branch Name
+git push fr master
+
+git log
+
+git reset
+
+git revert CID
+
+git push AN BN -f
+
+.gitignore
+
+.classpath
+.project
+
+
+IDE
+
+Eclipse
+MyEclipse
+
+Visul Studio Code
+
+
+master
+
+
+git branch bn
+
+git branch
+
+
+git checkout bn
+
+
+git checkout -b bn --> it will create a branch and will switch
+
+
+
+What is the diff b/w branch and tag?
+
+
+Tag                 branch
+---                 ------
+tag is immutable.   brnch is a mutable
+tags - prod deployment branch - devlopmnt
+
+tagrs are going to create on master brach.
+
+
+
+git stash
+
+git stash list
+
+git stash apply
+
+git stash drop
+
+git stash pop stash@{0}
+
+
+
+git cherry-pick c3
+
+
+
+flipkart
+
+master
+C3
+
+dev
+
+C1
+C2
+C3
+
+git merge dev
+
+
+git log
+
+
+https://github.com/mss-ep/flipkart.git --> HTTPS
+
+git@github.com:mss-ep/flipkart.git --> SSH URl
+
+
+git clone RR URL
+
+HTTP status codes
+----------------
+100
+200
+300
+400
+500
+
+404 --> Not Found
+
+
+
+git fetch
+
+git pull
+
+
+
+SSH Keys
+--------
+
+Open Git Bash
+
+ls -la ~/.ssh/
+
+ssh-keygen -t dsa
+
+~/.ssh/
+id_rsa
+id_rsa.pub
+
+id_dsa
+id_dsa.pub
+
+dsa
+sha
+
+
+https://ghe.mss.com
+
+git@github.com:OrgArun/Application.git --> SSH URL
+
+
+PAT
+---
+HTTPS URl -->
+user name
+PAT
+
+
+5ce3f306826a7938bd2888c3e0991e17edc808d6 -- PAT
+
+
+
+
+Branching Startegy ****
+------------------
+
+
+
+dev. --> flipkart-dev.com --> devlopment team
+
+qa/pre-prod/stage/uat flipkart-qa.com --> QA UAT
+
+prod
+
+
+flipkart.com --> Production URl --flipkart.com --> End Users
+
+What is the Diff b/w git and GitHUB?
+
+Git is a DVCS
+svn is a VCS
+
+GitHub is the hosted service fr Git , it will provide UI for Git..
+
+
+git merge 
+
+git rebase
+
+Build Tool
+----------
+Ant, Gradle
+
+Maven
+-----
+Maven is a Java based, Open Source, Build tool.
+3.x
+
+Java 1.8
+
+Java 8
+
+any OS
+Apache 
+
+Build artifacts/packages 
+
+.Net
+----
+Nant
+MS Build
+
+Java Script Node Js
+----------
+
+Gulp
+Grunt
+
+
+Ruby
+---
+Rake
+
+Java
+----
+
+java -version
+
+Mavan
+-----
+
+mvn -version
+
+
+Java , we can delelop the 3 types of applications
+
+Standalone applications  --> jar -- Java Archieve
+Java classes
+
+Web Applications --> war -- Web Archieve
+Java code + Web Content (html, css,js , images, xml)
+jar file + Web Content
+
+Tomcat/JBoss
+
+Enterprise applications --> ear -- Enterprise Archieve
+war+jar+web...
+
+Jboss/WAS - WebSphere App Server /WebLogic
+
+build.xml --> ant
+
+pom.xml --> maven
+
+build.gradle --> gradle
+
+Content in pom.xml
+------------------
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+ <groupId>com.mss</groupId>
+  <artifactId>flipkart</artifactId>
+  <version>1.0</version>
+  <packaging>jar</packaging>
+
+
+  <dependencies>
+  
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+  
+</project>
+
+
+<dependency>
+    <groupId>junit</groupId>
+    <artifactId>junit</artifactId>
+    <version>4.10</version>
+    <scope>test</scope>
+</dependency>
+
+<project>. --> root tag/parent tag
+
+
+</project>
+
+
+SC
++
+Build Script
++
+Unit Test cases
+
+Junit --> Java
+
+Nunit --> .Net
+
+Cunit --> C Lng
+
+CPPUnit --> C++ Lang
+
+
+
+mvn package
+
+
+3 Types repos
+
+1) Maven Local Repo
+~/.m2/repository
+
+C://User/mithuntechnologies/.m2/repository/
+/Users/mithuntechnologies/.m2/repo...
+/home/mithuntechnologies/.m2/repository
+
+MHD/
+conf/settings.xml
+
+2) Maven Central Repo
+3) Remote repo
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+									   
+									   
+									   
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
