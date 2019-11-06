@@ -1,0 +1,151 @@
+page1
+
+Current Role : Hadoop/Spark Developer
+PROFESSIONAL SYNOPSIS
+
+•	8+ years of experience in Information Technology and more than 1 year of exp. into Non-IT(Customer care support)
+•	4+ years of experience in BigData technologies using  Hadoop, Spark,  Hive, Sqoop & Python
+•	4 + years of experience in Product Development and Support using Java/J2EE
+•	In-depth understanding of Spark Architecture Spark Core, Spark SQL, Dataframes and Datasets
+•	Expertise is using Spark-SQL with various data sources like JSON, Parquet and Hive.
+•	Performed data analysis using SparkCore and SparkSQL.
+•	Designed and Implemented PIG and HIVE for transformation, filtering, loading and storing of data.
+•	Worked on Hive UDFs.
+•	Experience in using Partitioning and Bucketing concepts in Hive and designed both Managed and External tables in Hive for optimized performance.
+•	Worked extensively with SQOOP for importing and exporting data from MySQL to HDFS and vice versa.
+•	Knowledge on MapReduce, Hbase.
+•	Excellent programming skills in Core Java, Scala and SQL.
+•	Experience in continuous monitoring and managing the Hadoop cluster through ResourceManager.
+•	Developed new application and added functionality to existing applications using Java/J2EE technologies
+•	Wrote SQL queries to retrieve data from the database using JDBC
+•	Develop UIs with JSP, Servlets, JavaScript, HTML and CSS
+•	Experience on Oracle Business Intelligence Enterprise Edition 11g
+•	Extensively worked on OBIEE Administration tool (Physical, Business Model and Mapping and Presentation Layers)
+•	Experience in creation of Reports and Dashboards
+•	Requirement gathering, Documenting the Business Requirements and Analysis of Requirements.
+•	Meetings with Stakeholders for Change Request - Analysis, Feasibility, Prioritization, Scheduling, Testing
+•	Act as first point of contact for customers reaching out for support for applications within the business environment.
+•	Industry expert possessing keen understanding and hands-on exposure of all phases of Project / Program Life Cycle, which includes critical functions such as requirement gathering and analysis, project scoping, task allocation, resource optimization and timely project delivery, with focus on quality and costs
+•	Efficient Team Leader & Player, combining communication, interpersonal & problem solving skills with analytical, decision making and leadership capabilities to enhance organizational objectives
+
+Core Competencies:
+ 
+•	Application development for ETL using Bigdata technologies and Data analytics using OBIEE
+•	Testing/Deploy/Configuration Review
+•	Troubleshooting & Issue Resolution
+•	Cross Functional Team Coordination
+•	Developed new application and added functionality to existing applications using Java/J2EE technologies
+•	Mentoring & Project/Program Management
+•	Client Relationship Management
+ 
+
+TECHNOLOGY COMPETENCE
+
+ 
+•	Big Data Technologies           : HDFS, Spark, Hive, Pig, Sqoop, Hbase, Mapreduce
+•	Languages                                : C, C++, Core Java, J2EE, Scala, SQL,Python
+•	Software			: HTML,  XML, Apache Tomcat,Web Logic
+•	Database			: Oracle, MySQL
+•	Tools / IDE’s                             : Eclipse, IntelliJ IDEA, OBIEE 11g
+•	Platform			: Microsoft Windows and LINUX
+
+
+Page2
+
+Project 1
+Project Name      :  Data Validation and Reconciliation, Apache Griffin
+Client                    :  JPMC, US
+Duration               : Jul 2019 to Till date
+Environment       : HDFS, Spark, Hive, Scala, Java, Livy, ElasticSearch
+
+
+Project Description:
+
+The data quality (DQ) is a key criteria for many data consumers like IoT, machine learning etc., however, there is no standard agreement on how to determine “good” data. Apache Griffin is a model-driven data quality service platform where we can examine our data on-demand. It provides a standard process to define data quality measures, executions and reports, allowing those examinations across multiple data systems. When we don't trust our data, or concern that poorly controlled data can negatively impact critical decision, we can utilize Apache Griffin to ensure data quality.
+
+Accountabilities:
+•	Involved in setup of Apache Griffin, Livy, Elastic Search with the required configurations.
+•	Configured and tested the different Data Quality Measures using standard configurations and Spark SQL
+o	Accuracy
+o	Profiling
+o	Distinctness
+o	Completeness
+o	Timeliness
+
+Project 2
+Project Name      :  RCDR ChatBot, RASA
+Client                    :  JPMC, US
+Duration               : Feb 2019 to Jun 2019
+Environment       : Python, Flask and RASA ML Framework
+
+
+Project Description:
+
+RCDR chatbot is contextual chatbot developed using Rasa ML framework, for providing information on access and metrics for different applications in RCDR. A Rest API wrapper is built with Flask for providing access to the Rasa inbuilt APIs.
+Accountabilities:
+•	Training of chatbots using Rasa ML framework
+•	Development of Rest API to access Rasa chatbot APIs using Flask
+•	Deployment automation of the application in Gaia using jules and Jenkins
+
+Project 3
+Project Name      :  Billing Analytics, I-View
+Client                    :  Vodafone, UK
+Duration               : Jul 2017 to Jan 2019
+Environment       : Hadoop, HDFS, Spark, Hive, Sqoop, OBIEE 11g, Scala, Java
+
+Project Description:
+
+I-View provides capability and functionality required for online reporting & analytics. This will be achieved via a single unified repository for internal, external and partner users to access and produce reports on relevant Billing data.
+I-View consumes the billing data coming from core billing system BRM(Billing Revenue Management). It performs ETL process using Spark Core and SparkSQL and stores the summarised data onto Hive Warehouse and also export the processed data using Sqoop to Teradata. OBIEE 11g is used for reporting purpose and to analyze their business in every aspect. This project also facilitates analyzing their business problems at granular level. Developed UIs using JSP, Servlets, JavaScript, HTML and CSS for user experience.
+
+Accountabilities:
+•	Communicating with line of business, Application manager, project architect, and other stakeholders.
+•	Analyzing the source systems data before loading into HDFS.
+•	Involved in data loading and validating the data fields as part of data loading.
+•	Involved in ETL development using SparkCore and SparkSQL
+•	Monitoring ETL, correcting if any issue occurs in daily ETL load.
+•	Worked extensively with SQOOP for importing and exporting data from MySQL to HDFS and vice versa
+•	Designing and development of all layers of OBIEE Repository i.e. Physical, Business Model, and Presentation layer.
+•	Designing Reports and Dashboards
+•	Develop UIs with JSP, Servlets, JavaScript, HTML and CSS
+•	Involved in Incident management , Problem Management, Change Management, Release management.
+•	Day to  Day Operations work using the application
+•	Meetings with Stakeholders for Change Request - Analysis, Feasibility, Prioritization, Scheduling, Testing
+•	Requirement gathering, Capturing User Requirements, Analysis of Requirements
+•	Documenting the Business Requirements and Propose solutions
+•	Meetings with business teams to ensure requirements are correctly translated into programs
+•	Generate the O/P for UAT & share with business for UAT Sign-off
+•	Understand the UAT Defects, analyse them & do necessary changes when required
+•	Working with both offshore and onshore teams in all aspects of product support
+
+
+Project 4
+Project Name      :  Unidoop(Bill Analytics & Presentment System)
+Client                    :  Airtel, Africa
+Duration               : Jun 2016 to Jan 2017
+Environment       : Hadoop, HDFS, Spark, Hive, Sqoop, OBIEE 11g, Scala, Java
+
+
+Project Description:
+
+Unidoop is the advanced version of Uniserve (Bill presentment Tool) used for ETL purpose from various Datasources and managing data using Big data technologies. It is highly scalable and can process terabytes of data. It is being used to extract Data from core billing systems and analyze using Spark and Hive. The analyzed data will intern used by Uniserve and Data analytic teams in supporting both Business and Customer care people in enhancing the business and resolving the customer queries. Developed UIs with JSP, Servlets, JavaScript, HTML and CSS for user experience.
+
+Accountabilities:
+•	Communicating with line of business, Application manager, project architect, and other stakeholders.
+•	Analyzing the source systems data before loading into HDFS.
+•	Involved in data loading and validating the data fields as part of data loading.
+•	Involved in ETL development using SparkCore and SparkSQL
+•	Monitoring ETL, correcting if any issue occurs in daily ETL load.
+•	Worked extensively with SQOOP for importing and exporting data from MySQL to HDFS and vice versa
+•	Designing and development of all layers of OBIEE Repository i.e. Physical, Business Model, and Presentation layer.
+•	Designing Reports and Dashboards
+•	Developed UIs with JSP, Servlets, JavaScript, HTML and CSS
+•	Involved in Incident management , Problem Management, Change Management, Release management.
+•	Day to  Day Operations work using the application
+•	Meetings with Stakeholders for Change Request - Analysis, Feasibility, Prioritization, Scheduling, Testing
+•	Requirement gathering, Capturing User Requirements, Analysis of Requirements
+•	Documenting the Business Requirements and Propose solutions
+•	Meetings with business teams to ensure requirements are correctly translated into programs
+•	Generate the O/P for UAT & share with business for UAT Sign-off
+•	Understand the UAT Defects, analyse them & do necessary changes when required
+•	Working with both offshore and onshore teams in all aspects of product support
