@@ -1,0 +1,41 @@
+Hadoop Processing Using Map Reduce:
+
+1) The Processing unit of Hadoop is Map Reduce using this we can process the big data available on HDFS
+2) The data is not stored in a single location, it has been distributed on multiple data nodes.
+3) As we know, the data on HDFS splitted into multiple blocks and distributed over the datanodes, hence the normal traditional
+   system couldn't able to process this data distributed across nodes. Mapreduce framework could able identify the data block and 
+   can send the business logic to data nodes and process the data. It even can process the data parallelly.
+4) Basically there are two functions in Map Reduce. Map and Reduce
+main Advantages of Map Reduce:
+
+1) Parallel Processing : Mapreduce can process the data block parallelly available on slave nodes respectively and can increase the processing time very fast.
+2) Data Locality : Mapreduce can send the Business logic over to datanodes where appropriate data blocks available and can process the data over there. which
+   can reduce the network bandwith in moving the big data to a single machine
+3) Once the slave machines are done with the processing, they send the results to Master node, these results are aggregated together and the 
+   final result will be sent back to client.
+4) Client sends the request to Resource Manager, resource manager sends the datanodes information where the data resides.
+5) In the processing of a input data, Mapreduce involved with two major tasks. Map task and Reduce task. Map task gets an input, process the input.
+   The output Map task will be passed as input to Reduce task, reduce task will perform aggreration activities and the final output will be submitted
+   to the client.
+6) A Map takes the input in Key-Value pairs and produces the output a List of Key-value pairs.
+7) The input is splitted/divided into multiple splits which is called as Input splitting. The mapper will take line number as key and content as
+   value and generate a List of Key value pairs. This List of Key Value pairs passed to Shuffle phase. The reducer will aggregate the data and send
+   the output to client.
+8) Yarn : Yet Another Resource Negosiator. It will be used for Resource Management.
+
+Map Reduce Architecture : Resource Manager is the Master deamon that runs on Master machine. Node manager runs on slave machine
+Client : which submits a Mapreduce job
+Resouce manager : Resource Manager is the master deamon, to which all the jobs are submitted from the client. which can asign cluster level resources
+for executing a job.
+Node Manager is a slave deamon that runs on data nodes. Node manager manages resources of data node.
+Job History Server : It keeps the track of the jobs submitted
+As soon as the job submitted to Resouce manager, Scheduler schedules the job. Resource Manager allocates container to start Application master.
+Application master notify the Node manager to start the container. Application code will be executed in the container on the datanode and the result
+sent back to the client.
+9) InputFormat is the super class of Input Format. we have three sub classes, FileInputFormat, ComposableInputFormat, DBInputFormat
+10) FileInputFormat is again sub classed as TextInputFormat, NLineInputFormat, SequenceFileInputFormat
+11) OutputFormat is the super class of Output Format. It has four sub classes, FileOutputFormat, NullOutputFormat, DBOutputFormat, FilterOutputFormat
+12) FileOutputFormat is divided into two types, TextOutputFormat, SequenceFileOutputFormat
+13) For a Mapper the Input key is LongWritable, Input value is Text, Output Key is Text, Output value is LongWritable
+14) Using the Configuration conf object we can define the entire configurations.
+15) 

@@ -1,0 +1,44 @@
+Built In Functions
+===========
+EVAL Functions
+1) AVG (Note : Null values will be ignored)
+2) CONCAT (Note : a) Concat should be applied on same datatype, b) any one parameter is null, resultant would be null, c) Will only take Chararray) 
+3) COUNT (Null values will be ignored)
+4) COUNT_STAR(Will include the null values)
+5) DIFF
+6) IsEmpty (Should be applied on Bag & MAP)
+7) MAX
+8) MIN
+9) SIZE (For strings will return no.of characters, for int, float, double it will return 1)
+10) SUM
+11) TOKENIZE
+====================
+LOAD/STORE FUNCTIONS
+1) Use JsonLoader to load JSON data.
+2) Use JsonStorage to store JSON data.
+3) TextLoader works with unstructured data in UTF8 format.
+======================
+Math Functions
+1) ABS (For Absolute values)
+2) CEIL, FLOOR (For rounded values UP & DOWN Respectively)
+3) RANDOM (Returns a random pseudo number)
+4) ROUND()
+5) SQRT() (For calculating Square Root)
+================================
+String Functions
+1) INDEXOF (Returns the index of the first occurrence of a character in a string, searching forward from a start index.)
+2) LAST_INDEX_OF (Returns the index of the last occurrence of a character in a string, searching backward from a start index.)
+3) LCFIRST (Converts the first character in a string to lower case.)
+4) LOWER (Converts all characters in a string to lower case)
+5) REGEX_EXTRACT ( Performs regular expression matching and extracts the matched group defined by an index parameter)
+6) REGEX_EXTRACT_ALL (Performs regular expression matching and extracts all matched groups.)
+7) REPLACE (Replaces existing characters in a string with new characters)
+8) STRSPLIT (Splits a string around matches of a given regular expression)
+9) SUBSTRING (Returns a substring from a given string.)
+10) TRIM (Returns a copy of a string with leading and trailing white space removed.)
+11) UCFIRST(Returns a string with the first character converted to upper case.)
+12) UPPER (Returns a string converted to upper case)
+13) TOTUPLE( Use the TOTUPLE function to convert one or more expressions to a tuple)
+14) TOBAG (Converts one or more expressions to type bag)
+15) TOMAP (Converts key/value expression pairs into a map)
+16) TOP (Returns the top-n tuples from a bag of tuples)

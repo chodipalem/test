@@ -1,0 +1,55 @@
+1) logname : It will display the user name who logged in
+2) banner "Hello Rama!" : It prints the message in large letters
+3) File Creation : cat > rama1 or touch rama2 or gedit rama3
+4) cat filename : to open a file, cat man > file2 (to copy the output to another file), cat >> file3 (To appenf data to another file)
+5) rm -i filename : to remove file forcefully
+6) cmp f1 f2 (file comparison)
+7) Wild card characters : *,?,[],-
+8) ls [aeiou]* --> It displays all the files whose first character of the file
+   should be in any of the character available in the square brackets
+9) ls [k-v]* --> First letter should be any character between k,v
+10) A link is a refernce of a file
+11) (u-owner, g-group, o-other) chmod u+w,u+r filename (Providing read/write permissions to owner for the file )
+12) chown user2 file1 (To change owner of a file)
+13) chgrp user2 file1 (For changing the group of a file)
+14) compress file1 (output : file1.Z)
+15) zcat file1.Z (to read a compressed file)
+16) uncompress file1.z (to uncompress the file)
+17) grep : It is a search command which can search for a string specifed and returns
+    the entire line in which string was found.
+18) grep rama filename, grep "rama is good" filename
+19) grep -v rama filename (it returns the lines which all doesn't have rama
+20) fgrep "UNIX
+     >HADOOP"  ( For searching multiple targets)
+21) egrep "c|c++|java" filename (It will search multiple targets and search process is very fast when compared to grep)
+22)  sort filename : To sort contents of a file
+23) cut -f 1,3 samplefile (Using cut we can retrieve specific columns of a delimited file)
+    cut -d"|" -f 1,3 samplefile (for custom delimiters)
+24) Piping :  Using piping we can connect one or more commands. The output of one
+    command will be the input for other command
+25) ls |wc -l > totalfiles (Here the ls command output will be passed as input for wc command
+26) Using find command we can find the location of the files
+    find . -name filename -print (It will search for the file filename in the current directory and prints on the screen)
+    find / -name filename -print (It will search the entire system for the file starting from root)
+27) find / -name filename -print > searchfound & (using nohup we can make the search command to run in background)
+28) more filename ( it displays the content of the file in pagewise manner)
+29) We have ed, ex and vi editors
+30) In vi editor we have three modes (command mode, insert mode, execute mode)
+    for saving the changes and quitig file (:wq!), to quit the file without savig (:q!)
+31) Two types of varibles (System variables, User defied variables)
+32) echo command used to display the messages on the screen
+33) now=`date` (for storing the date command output into now user variable) : reverse qoutes
+34) Constant variables a=100 readonly a (using readolny we can define variables with constant values)
+35) echo "There are `who|wc -l` users" (It will display the user count currently loggedin)
+35) read is used to read data from user and stores in variables
+36) We have three types of operators (Arthematic, Relational, Logical)
+37) c=`expr $a + $b` (expr will be used for adding two numbers, but expr is capable to work on interger values but not floating values)
+38) if [ `expr $n%2` -eq 0 ] (For even number identification)
+39) if [ -f$filename ] (Checks for file exists in the directory or not)
+40) if[ -s$filename ] (Checks whether the file size is greater than zero or not)
+41) If there are three conditions then we have to use if elif fi
+42) str1 = str2 (True if two strings are equal) str1 != str2 (True if two strings are not equal), -n str1 (True if the lenght of string greater than zero)
+43) sed : Stream Editor is one of the text processing utility.It reads a line from Input Stream, execute sed commands on the line and send the result on Output Stream.
+44) A regular expression is a string which can represent a sequence of characters
+
+     

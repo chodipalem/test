@@ -1,0 +1,627 @@
+Hadoop Name Node Safe mode command.
+
+hadoop dfsadmin -safemode leave
+
+
+What is Hive and its purpose?
+
+Hive is a Data Warehouse infrastructure. A dataware house is a database for reporting and analysis purpose where we keep the summarised results.
+
+===== Creating Database =====
+
+1) create database if not exists ramacards;
+
+============== Creating table =======
+2) use ramacards;
+3) create table if not exists deck_of_cards(
+   color string,
+   suit string,
+   pip string)
+   row format delimited fields terminated by '|'
+   stored as textfile;
+   
+ ======== loading Data to the table ========
+ 
+ 4) load data local inpath 'path' into table  deck_of_cards; 
+ ========================================================
+ =========== Setting MYSQL as Hive Meta Store =========
+ 5) 
+ a) create a database with the name "hive_metastoredb"
+      create database if not exists hive_metastoredb;
+ b) RUN MYSQL DB Script("hive-schema-0.13.0.mysql.sql") available under the path "/usr/local/hadoop/hive/scripts/metastore/upgrade/mysql" in "hive_metastoredb" mysql DB.
+     mysql>SOURCE /usr/local/hadoop/hive/scripts/metastore/upgrade/mysql/hive-schema-0.13.0.mysql.sql
+ c) create a DB user which can have DB access on the database "hive_metastoredb"
+     create user 'rama_hive'@localhost identified by 'rama_hive';
+     grant all on hive_metastoredb.* to 'rama_hive'@localhost;
+     flush privileges;
+     
+ d) Modify hive-site.xml file available in the location "$HIVE_HOME/conf"
+    a) modify the property (make changes to the connection URL) 
+      <property>
+      <name>javax.jdo.option.ConnectionURL</name>
+      <value>jdbc:mysql://localhost/hive_metastoredb?createDatabaseIfNotExist=true</value>
+      <description>JDBC connect string for a JDBC metastore</description>
+      </property>
+      
+    b) Provide Driver Details
+    
+     <property>
+     <name>javax.jdo.option.ConnectionDriverName</name>
+     <value>com.mysql.jdbc.Driver</value>
+     <description>Driver class name for a JDBC metastore</description>
+     </property>
+     
+    c) Provide Connection User Name
+    
+    <property>
+    <name>javax.jdo.option.ConnectionUserName</name>
+    <value>rama_hive</value>
+    <description>username to use against metastore database</description>
+    </property>
+    
+    d) Provide Connection User Password
+    
+    <property>
+    <name>javax.jdo.option.ConnectionPassword</name>
+    <value>hive_rama</value>
+    <description>password to use against metastore database</description>
+    </property>
+    
+    e) Restart Hive
+    
+    =========== Hive Warehouse Settings ===========
+    
+    6) 
+    
+    a) create a directory on HDFS "/HIVE_WAREHOUSE"
+      
+    b) Modify hive-site.xml for effecting the newly create Warehouse directory
+    
+        <property>
+        <name>hive.metastore.warehouse.dir</name>
+        <value>/HIVE_WAREHOUSE/</value>
+        <description>location for default hive datawarehouse</description>
+        </property>
+        
+        
+   ========== Details on HIVE METASTORE Tables ===========
+   
+   7) a)DB Details available in the table "DBS"
+      b)Table Details available in the table "TBLS"
+      
+      
+  ========= About Set command ====
+  
+  8) Using Set command we can check and changes the hadoop parameters at run time
+  
+      a) set mapreduce.job.reduces; (It will list the no. of reducers)      
+      b) set mapreduce.job.reduces=10; (It will set the reducers to 10)
+      c) set fs.defaultFS; (To know the system details where the name node was running)
+      d) set hive.cli.print.current.db=true; (For displaying the current database name on Hive CLI)
+      
+      
+   ==== Abour hiverc file =======================
+   
+   9) We can edit the hiverc file for making the hive parameters specific to OS user
+       
+       a) vi hiverc
+         set mapreduce.job.reduces=10;
+         :wq!        
+ 
+  
+     
+  ====== Hive Execution =============
+  
+  10) a) hive (It will login into hive command line interface)
+      b) hive -e (It will execute the hive queries from Linux Command Line prompt)
+         hive -e "select count(1) from rama.deck_of_cards";
+         
+      c) hive -f (For executing a series of hive queries)
+      d) /tmp (Default hive log folder (hive.log))
+      e) need to know about hive.log4j file available under $HIVE_HOME/conf
+       More parameters like
+        
+        a) hive.log.dir
+        b) hive.log.file
+        c) hive.querylog.location
+        
+        We can override the above properties using (-hiveconf/set)
+  
+  ============Writing & Executing the Hive Queries ===============
+  
+  1) select * from department;
+  2) select count(1) from orders;
+  3) select * from orders limit 100;
+  
+  Problem Statement 1: Get number of orders by order_status for a given date '2017-01-01'
+  
+  select order_status, count(1) from orders
+  where order_date='2017-01-01'
+  group by order_status
+  order by order_status;
+  
+  ================== Hive Managed Tables ==============
+  
+  1)create table if not exists deck_of_cards(
+   color string,
+   suit string,
+   pip string)
+   row format delimited fields terminated by ','
+   stored as textfile;
+  2) describe deck_of_cards;
+  3) describe formatted deck_of_cards;
+  
+  ================== Hive External Tables ===============
+  
+  1) create external table deck_of_cards_ext(
+     color string,
+     suit string,
+     pip string)
+     row format delimited fields terminated by '|'
+     location '/cards/data';
+     
+  ======= Difference between Managed Table and External Table =========
+  
+  1) We can first create both managed and external tables without loading the data at the time of creation.
+  2) Once table is created we can either load the data from Local Linux path or from HDFS path.
+  3) If we loaded the data available in local, Hive stores the data on HDFS location in table directory created under Hive dataware house.
+  4) If we load the data available on HDFS, in case of managed tables, data will be moved to Hive Dataware house. But in case of external tables,
+     table will be mapped the data location instead of creating a copy in Hive Dataware house.
+  5) If we drop any managed table, both metadata from metastore and the actual data from HDFS will be lost.
+  6) In case of external table, only the metadata from metastore will be deleted, actual data remains available on HDFS
+  
+  ========= Creating external table using Avro data format files(avsc)==================
+  
+  1) 
+  =============================================================================
+  
+  =========== Hive Partitioning ==============
+  
+  1) We can create partitions in two types in Hive
+   
+   a) Static Partition : 
+   
+   1) First we have to define a table with partition column as shown below
+   
+              create table tab_stat(
+                      > empid int,
+                      > ename string)
+                      > partitioned by (loc string)
+                      > row format delimited fields terminated by '|'
+                 > stored as textfile;
+    2) Creating the partition at the time of loading the data
+    
+    load data local inpath '/mnt/hgfs/SHAREPATH/hive_partition.txt' into table tab_stat partition(loc='GNT');
+    
+    3) Creating Partition using Alter command
+    
+    alter table tab_stat add partition(loc='HYD');
+    load data local inpath '/mnt/hgfs/SHAREPATH/hive_partition.txt' into table tab_stat partition(loc='HYD');
+    
+  b) Dynamic Partitioning :
+  
+  Below Parameters needs to be enabled for Dynamic Partitioning
+  
+  a) set hive.exec.dynamic.partition.mode=nonstrict; (It enables all partitions to be determined as dynamic)
+  b) set hive.exec.dynamic.partition=true;(for enabling dynamic partitioning)
+  c) set hive.exec.max.dynamic.partitions.pernode=1000;
+  e) 
+  
+  1) For this we would be requiring a staging table which can be either a managed or external table with the data.  
+  2) create a main table with the partition column.
+  3) Using INSERT statement we can dynamically create partitions and can load the data to appropriate partitions
+     availabe in the staging table.
+     
+  4) Partitions information available in "PARTITIONS" table of metastore
+  5) We can drop the Partitions using the alter table command.
+      alter table tab_dyn drop partition(loc='HYD');
+  6) We can add a partition to the existing table using alter table command.
+  
+      alter table tab_dyn add partition(loc='GNT');
+      
+  7) We can load the data to an existing partition using "INSERT" statement.
+  
+        insert overwrite table tab_dyn partition(loc='GNT')
+                 > select eid, ename from tab_dyn;
+  Note : We should not include the Partition column in the select query of the staging table
+  
+  8) Using "show partitions tab_dyn" we can view the partitions of the table
+  
+  9) Using "Location" we can change the location of the partition
+     
+     alter table tab_dyn partition(loc='GNT')
+     set location 'NEW LOCATION';
+     
+   10) For table information in formatted manner
+   
+        describe formatted tab_dyn;
+   11) For partition information of the table in formatted manner
+   
+        describe formatted tab_dyn partition(loc='GNT')
+         the above command shows the HDFS location for a particular partition
+         
+   12) For adding the physical partition to hive metastore we need to use the command "MSCK repair table <table_name>"
+   
+   How to insert data to a partition table having both static and dynamic partitions
+   
+   
+         ex: create table orders(order_id int, order_date string, order_customer_id int, order_status string) partition by(circle string, order_month string)
+             row format delimited fields terminated by "," stored as textfile;
+             
+           insert into table orders partition(circle='AP',order_month)
+           select order_id,order_date,order_customer_id,order_status,substr(order_date,1,7) order_month from orders_stage;
+  
+  ================= Hive Bucketing ==================
+  
+  Bucketing is a technique for decomposing data sets into a number of manageable parts.
+  
+  As the no. of partitions increases(can be created using dynamic partitioning), it can impact the query performance.
+  
+  So, instead of creating more number of partitions, we can bucket the data to a predefined no. of buckets and can be used for quering.
+  
+  1) SET hive.enforce.bucketing = true;
+  
+     create table tab_bkt(
+     eid int,
+     ename string,
+     loc string)
+     clustered by (eid) into 100 buckets
+     row format delimited fields terminated by '|'
+     stored as textfile;
+     
+  2) We can't dump data using LOAD, instead we have to use "INSERT" command
+     
+  3) The bucketted column should be a primary key, which will generate an Hash key and evenly distributed in the buckets
+  
+  ================== CTAS AND ORC FILE FORMATS =========================
+  
+  CTAS in ORC File Format
+  
+  1) create table stage_orc
+                 > row format delimited fields terminated by '|'
+                 > stored as ORC
+                 > as
+                 > select * from emp_stage;
+                 
+  2)  show create table stage_orc;
+  
+  3) create table stage_orc_serde(
+      eid int,
+      ename string,
+      loc string)
+      stored as ORC;
+      
+      show create table stage_orc_serde;
+      
+  ==================== Specifying File Formats and Delimiters ===========
+  
+  1) Different types of Storage File Formats supported by hive
+  
+   a) TEXTFILE (Default format)
+   b) SEQUENCEFILE
+   c) RCFILE (AVAILABLE FROM 0.6 VERSION)
+   D) ORC (AVAILABLE FROM 0.11 VERSION)
+   E) PARQUET (AVAILABLE FROM 0.13 VERSION)
+   F) AVRO (AVAILABLE FROM 0.14 VERSION)
+   
+   --> For custom file format, we need to use InputFormat and OutputFormat along with the Row Format Serde
+   
+   2) ORC Format Table Creation
+   
+      a)  create table rama_orc(
+           > eid int,
+           > ename string,
+           > loc string)
+           > stored as ORC;
+           
+      b) show create table rama_orc;
+      
+      CREATE  TABLE `rama_orc`(
+        `eid` int,
+        `ename` string,
+        `loc` string)
+      ROW FORMAT SERDE
+        'org.apache.hadoop.hive.ql.io.orc.OrcSerde'
+      STORED AS INPUTFORMAT
+        'org.apache.hadoop.hive.ql.io.orc.OrcInputFormat'
+      OUTPUTFORMAT
+        'org.apache.hadoop.hive.ql.io.orc.OrcOutputFormat'
+      LOCATION
+        'hdfs://localhost:54310/RAMA_HIVE_WAREHOUSE/rama.db/rama_orc'
+      TBLPROPERTIES (
+  'transient_lastDdlTime'='1484975214')
+  
+  c) If we specify the Row Format as below
+  
+        create table rama_orc_file(
+	    > eid int,
+	    > ename string,
+	    > loc string)
+	    > row format delimited fields terminated by '|'
+    > stored as ORC;
+    
+    
+    d) show create table rama_orc_file;
+    
+      CREATE  TABLE `rama_orc_file`(
+  `eid` int,
+  `ename` string,
+  `loc` string)
+ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY '|'
+STORED AS INPUTFORMAT
+  'org.apache.hadoop.hive.ql.io.orc.OrcInputFormat'
+OUTPUTFORMAT
+  'org.apache.hadoop.hive.ql.io.orc.OrcOutputFormat'
+LOCATION
+  'hdfs://localhost:54310/RAMA_HIVE_WAREHOUSE/rama.db/rama_orc_file'
+TBLPROPERTIES (
+  'transient_lastDdlTime'='1484975424')
+  
+3) Specifying Delimiter of a Hive Table
+
+a) ROW Format delimited fields terminated by ':'
+
+=========================== Load data into Hive tables ===========
+
+1) Load command don't initiate any Map reducejobs, simply copied data to HDFS
+2) With Load command we can't perform any transformations to the data. Simply we can copy the data from one location to other.
+
+==================== Compressing the output ============
+
+1) hive.exec.compress.output=true; ( In order to generate a compressed hive output)
+2) hive.execution.engine=tez; (To run hive queries using tez engine)
+3) explain select * from rama_deck;
+
+===================== DML Operations on HIVE tables =====================
+
+Note : DML is supported from the version 0.14
+
+1) set hive.txn.manager=org.apache.hadoop.hive.ql.lockmgr.DummyTxnManager; (Default)
+2) set hive.txn.manager=org.apache.hadoop.hive.ql.lockmgr.DbTxnManager;
+3) Operations delete, update will work only on ORC format (insert is not a limitation)
+4) For applying transactions, we need to set the parameter "set hive.txn.manager=org.apache.hadoop.hive.ql.lockmgr.DbTxnManager;"
+5) Tables must be Bucket and should be in ORC file format
+6) For performing any DML operations, table should be created with the below properties
+
+    create table hive_transaction(i int, j string)                                                                  
+               > clustered by (i) into 4 buckets                                                                                 
+               > stored as ORC                                                                                                   
+           > TBLPROPERTIES('transactional'='true'); 
+           
+ 7) We can't update Bucketed Column
+ 
+ ===================== Hive Sub Queries and Total Ordering ===================
+ 
+ 1) Sub queries can be a part of FROM Clause
+ 
+ 2) Use Order By clause for ordering the data either in Ascending or Descending order
+ 
+ =================== Convert data from one file format to other ==========
+ 
+ 1) Using Insert command we can convert data of one format to other.
+ 
+ 
+ insert into table rama_avro select * from rama_text;
+ 
+ =========================  Write Data in Compressed Format ==================
+ 
+1) hive.exec.compress.output=true; ( In order to generate a compressed hive output)
+2) set io.compression.codecs;
+3) set mapreduce.output.fileoutputformat.compress.codec;
+
+========================= Denormalized Data from multiple data disparate data sets =============
+
+1) In case of Normalized tables, we would be requiring complex joins inorder to fulfill the reporting purpose
+2) We have to convert normalized tables to denormalized to minimize the complex joins.
+
+========================  Hive Partitioning ================
+
+1) Once table is created ith the partition column
+
+     create table rama_tab(
+       eid string,
+       ename string)
+       partitioned by (loc)
+       row format delimited fields terminated by '|'
+       stored as TEXTFILE;
+       
+    we can add partitions either as static or a dynamic one.
+   a) Static : alter table rama_tab add partition(loc='HYD')
+             partition(loc='SEC')
+             partition(loc='GNT')
+             
+   Note: While loading the data into a static partition, using the 'LOAD' or 'INSERT' command, data should be pre-processed
+   and data file should not contain the partition column values.
+   
+   b) Dynamic Partitioning : For this we would be requiring Staging table on HDFS.
+   
+   Insert into rama_tab partition(loc)
+   select * from rama_stage;
+   
+   Before creating the dynamic partitions, we should have to enable the below parameters
+   a) hive.exec.dynamic.partition=true;
+   b) hive.exec.dynamic.partition.mode=nonstrict;
+   
+   
+   Partitioning using Strict Mode :
+   
+   We can make Year as static partition and month as dynamic.
+   
+   
+   
+   =========================== JOINS ===========================
+   
+   1) Join is a logical operation by which we can extract data from multiple tables by joining them base common fields.
+   
+   
+   We have different types of joins
+   
+   1) Inner Join/Equi Join : By using this join we can fetch the common data from multiple data sets.
+   
+      select a.*, b.* from table1 a JOIN table2 b ON a.pk = b.pk;
+      
+   2) Non equi joins are not supported by HIVE
+   3) Hive creates a separate MapReduce job at each pair of tables. If we create a join on three a, b, ctables, one job will be created between a,b and
+      another job between result and table c.
+      
+   4) When joining three or more tables, if every ON clause uses the same join key, a single MapReduce job will be used.
+   5) We should take care of making the largest table as last table of our joins.
+   6) Hive also provides a "hint" mechanism to tell the query optimizer which table should be streamed.
+      SELECT /*+ STREAMTABLE(s) */ s.ymd, s.symbol, s.price_close, d.dividend
+      FROM stocks s JOIN dividends d ON s.ymd = d.ymd AND s.symbol = d.symbol
+      WHERE s.symbol = 'AAPL';
+   7) Left Outer Join : By using this JOIN, we can fetch all the rows from left table and the matched data from right table. For the unmatched
+      records, all the right hand side table column values are placed with null values.
+      
+   8) Right Outer Join : By using this JOIN, we can fetch all the rows from right table and the matched data from left table. For the unmatched
+      records, all the left hand side table column values are placed with null values.
+   9) Full Outer Join : By using this JOIN we not only fetch the common data but also can fetch all the data from both the tables.
+   10) Full Outer Join : It returns all the rows from the tables used in the JOIN
+   11) Left Semi Join : 
+   12) Right Semi Join are not supported in Hive
+   13) Cartesian Product Join : It performs the cartesian Product between the tuples of each table. 
+   ==============================================
+  1) In case of data sets, if one data set is small and other is large then we have to go for Map Side Joins.
+     If both data sets are huge then we have to go for reduce side joins.
+     
+  2) In case of Map side joins, the small data set will be distributed among the nodes in the cluster under distributed cache area, as and when the mapper starts
+     it loads the small data set into memory and starts processing the large data set by joining them. In this case we need to set num of reducers to zero.
+ 
+ 3) Before Hive 0.7 it is necessary to add an hint to the query for this optimization.
+ 
+     SELECT /*+ MAPJOIN(d) */ s.ymd, s.symbol, s.price_close, d.dividend
+     FROM stocks s JOIN dividends d ON s.ymd = d.ymd AND s.symbol = d.symbol
+     WHERE s.symbol = 'AAPL';
+     
+ 4) By setting the property "hive.auto.convert.join" to true, we can achive this optimization.
+ 
+ 5) By setting the property "hive.mapjoin.smalltable.filesize" we can provide the thresold value of small data sets.
+ 
+ 6) If the table is bucketted we need to set the propery "set hive.optimize.bucketmapjoin=true;" to true in order to achieve the optimization.
+ ===================================================================================================================
+ 
+ Working with different File Formats:
+ 
+ 1) Different Storage formats
+ 
+    a) Text b)Sequence c) AVRO d) ORC (Optimized Row Columnar) e) PRAQUET
+ Text File : Human readable format which can consume more size. Not convinent for queries.
+ Sequence File : Which will stores the data in Binary key value format.
+ AVRO : Widely used as a serialization platform.
+ Parquet : Column oriented binary file format.
+ 
+ Note : For reading the the data hive uses Deserializer and converts data into records. While writing the data hive use Serilization mechanism and writes the data to storage file formats.
+ 
+ ================ What is Serde? How it will be used ==============================
+ 
+ 1) Serde is a mechanish where it serialize and deserialize the data objetcs. Serialization is a process of converting an object into a sequence of bytes which can be persisted to a disk or database or can be sent through streams.
+    The reverse process of creating object from sequence of bytes is called deserialization.
+   Serde will have the logic for converting the data objects into a sequence of bytes and vice versa.
+ 2) What ever the operations performing on Hive tables, Hive uses Serde in fullfilling those operations.
+ 3) When we perform an select operation on Hive table, Hive uses InputFormat based on storage format and reads the record from the table.
+    The returned record is a serialized record which will be passed to Serde Deserialize() method which converts the record into field Objects.
+    These field objects are passed to ObjectInspector which will create field mapping and sends to the user.
+ 4) so similarly when we perform an Insert operation, hive converts the data record into java objects which will be passed to Serde.serialize()
+    method. This serialize metod converts the objects into a sequence of bytes and by using ObjectInspector it will create field mapping and stores into the table.
+
+======================================== About RC File =================================
+
+1) It is Columnar base format. In case of row based format, even to fetch few columns of a row, process engine will read the entire row
+   and discard the non-required columns. Which will need more I/O.
+   
+   Advantages of RC File(Row Columnar):
+   1) Fast loading of data 2) fast query process 3) Efficient Storage Space
+   
+2) Using rcfilecat tool we could able to read the RC File.
+
+3) Creating a table with RC file format...
+
+create table columnTable (key int , value int)
+> ROW FORMAT SERDE
+> 'org.apache.hadoop.hive.serde2.columnar.ColumnarSerDe'
+> STORED AS
+> INPUTFORMAT 'org.apache.hadoop.hive.ql.io.RCFileInputFormat'
+> OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.RCFileOutputFormat';
+====================================================================== About ORC File Format ======================
+
+1) It is a storage format where the data will be stored in Columnar format. ORC stands for Optimized Row Columnar
+2) Using this we can achieve fast loading of data, fast querying and can efficiently use the storage space.
+   Even compression techniques will work more efficiently when compared to row formats.
+3) a) create table rama_orc(
+   color string,
+   suit string,
+   pip string)
+   stored as ORC;
+   b) create table rama_orc
+      stored as ORC
+      as select * from student;
+ 4) In oder to perform hive crud operations hive tables should be of ORC format and should be clustered.
+ =======================  AVRO File Format ===================
+ 
+ It is a storage format 
+ 
+ 1) Avro data is always serialized with its schema. Files that store Avro data should always also include the schema for that data in the same file. Avro-based remote procedure call (RPC) systems must also guarantee that remote recipients of data have a copy of the schema used to write that data.
+ 
+ 2) Avro Tool Commands
+ 
+   a) avro-tools getschema : It will get the schema of the avro file in JSON format.
+   b) avro-tools tojson ./AVRO*/part-m-00000.avro (to read the avro data in JSON format)
+   c) If we want to convert and avro file to text file
+       avro-tools totext file.avro newfile.txt
+   d) If we want to convert JSON to AVRO file
+   
+       avro-tools fromjson file.json --schema-file file2.avsc
+       
+ 3) creating a hive table with avro format
+ 
+   create external table tab_avro
+       > location '/SQOOP_DATA_NEW'
+    > TBLPROPERTIES('avro.schema.url'='hdfs://localhost:54310/avro_schema/emptab.avsc');
+    
+ 4) By using "default" : "", in avasc file we can have default values while selecting the data from avro table.
+   
+   
+   
+
+ 
+ 
+ 
+   
+   
+   
+   
+
+
+
+
+
+
+
+
+
+         
+    
+  
+ 
+  
+  
+    
+   
+    
+    
+                 
+            
+            
+            
+       
+      
+     
+     
+  
+    
+        
+     
+  
+ 
+ 

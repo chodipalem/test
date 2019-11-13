@@ -1,0 +1,34 @@
+1) awk is the text processing utility.
+Advantages of AWK:
+a) Text Processing b) Producing Formatted Text Reports c) performing arthimetic operations d) String Operations
+2) It will its process with Begin, read a line from Input Stream, Apply awk commands on the line, repeat if the file is not reached to end
+   Execute AWK commands from the End Block
+3) awk 'BEGIN{printf "S.NO\tName\tSubject\tMarks\n"}{print}' marks.txt (It will add a header to the marks table)
+4) awk -f command.awk marks.txt (We can write all the commands in a file and can invoke the file using -f option)
+5) awk '{print $3 "/t" $4}' marks.txt (To print specific columns)
+6) awk '{print length($0)}' marks.txt (It will prints the length of each line)
+7) ARGC (it will have number of arguments provided in the command line)
+8) ARGV (It is an array that stores command line arguments)
+9) FILENAME (It contains the current file name)
+10) awk 'BEGIN{a=10;b=20; print "(a+b)=",(a+b)}' (It will compute addition of two numbers and print the output)
+11) awk 'BEGIN{a=10;b=++a; printf "a=%d, b=%d", a,b}'
+12) awk 'BEGIN{a="rama"; b="krishna"; c=a b; print c}'
+13) awk '$0 ~ 9' marks.txt (It will print lines containg 9)
+14) && (Logical AND Operator)
+15) || (Logical OR Operator)
+16) !(Logical NOT operator)
+17) rama[0] = 1, rama[1] = 1 print rama[0] "\n" rama[1]
+18) if (condition)
+{
+Action1
+Action2
+}
+19) awk 'BEGIN{num=10; if (num % 2 == 0) printf "%d  is a even number", num}'
+20) awk 'BEGIN{num=11; if (num % 2== 0) printf "%d is an even number", num; else printf "%d is an odd number", num}'
+21) awk 'BEGIN { for (i = 1; i <= 5; ++i) print i }'
+22) awk 'BEGIN {i = 1; while (i < 6) { print i; ++i } }'
+23) awk 'BEGIN {i = 1; do { print i; ++i } while (i < 6) }'
+24) awk 'BEGIN {str = "Hello, World !!!" print "Length = ", length(str)}'
+25) awk 'BEGIN{printf"Name = %s\n", "RAMA"}' (%s for string printing)
+26) awk 'BEGIN{a=0;b=1; for (i=0;i<=10;i++) {print a;c=a+b;a=b;b=c}}'  (Fibonnaci Series example)
+27) 

@@ -1,0 +1,131 @@
+Sqoop Practice
+1) sqoop -version
+2)create database RAMA_SQOOP;
+3) use database RAMA_SQOOP;
+4) grant all privileges on RAMA_SQOOP.* to ''@'localhost';
+5) grant all privileges on RAMA_SQOOP.* to 'hduser'@'localhost';
+=================================================
+For Listing DB level details
+   sqoop list-databases --connect jdbc:mysql://localhost -username=root -password=root@123;
+   sqoop list-tables --connect jdbc:mysql://localhost/HadoopDB --username=root -password=root@123;;
+=================================================
+SQOOP Import Statements
+6) sqoop import --connect jdbc:mysql://localhost/HadoopDB -username=root --table emptab -m 1 --target-dir /SQOOP_DATA/emp;
+7) sqoop import --connect jdbc:mysql://localhost/HadoopDB -username=root --table emptab -m 1 --target-dir /SQOOP_DATA/emp1 --fields-terminated-by '|';
+8) sqoop --options-file import.txt --table emptab -m 1 --target-dir /SQOOP_DATA/emp2;
+9) cat import.txt
+    import
+   --connect
+   jdbc:mysql://localhost/HadoopDB
+   --username
+   root
+10) sqoop --options-file import.txt --table emptab -m 1 --target-dir /SQOOP_DATA/emp4 --columns "empid","esal";
+11) sqoop --options-file import.txt --table emptab -m 1 --target-dir /SQOOP_DATA/emp5 --columns "empid","esal" --where "empid=100";
+12) sqoop --options-file import.txt --table emptab -m 1 --target-dir /SQOOP_DATA/emp6 --columns "empid","esal" --where "empid=100 and ename='Raja'";
+13) sqoop --options-file import.txt -m 1 --target-dir /SQOOP_DATA/emp7 --query 'select * from emptab where empid=100 and $CONDITIONS';
+14) sqoop import-all-tables --connect jdbc:mysql://localhost/HadoopDB --username=root --warehouse-dir /warehouse_all_tables;
+========================================================
+SQOOP EVAL 
+15) sqoop eval --connect jdbc:mysql://localhost/HadoopDB --username=root -password=root@123 --query "select * from emptab limit 3";
+16) sqoop eval --connect jdbc:mysql://localhost/HadoopDB --username=root --password=root@123 --query 'desc emptab';
+17) sqoop eval --connect jdbc:mysql://localhost/HadoopDB --username=root --password=root@123 --query 'create table evalTest(evId int primary key, evName varchar(40),evAmt int)';
+===============================================================
+SQOOP IMPORTS 2
+18) sqoop import --connect jdbc:mysql://localhost/HadoopDB --username=root --query "select * from emptab where \$CONDITIONS" --target-dir /SQOOP_DATA/emp8 -m 1;
+19) sqoop import --connect jdbc:mysql://localhost/HadoopDB --username=root --query "select * from emptab WHERE esal>18000 and \$CONDITIONS" -m 1 --target-dir /SQOOP_DATA/emp9;
+20) sqoop import --connect jdbc:mysql://localhost/HadoopDB --username=root --query "select e.empid,ename,esal,deptid,deptname,deptloc from emptab e JOIN depttab d ON (e.empid = d.empid) and \$CONDITIONS" -m 1 --target-dir /SQOOP_DATA/InnerJOIN1;
+21) sqoop import --connect jdbc:mysql://localhost/HadoopDB --username=root --query "select e.empid,ename,esal,deptid,deptname,deptloc from emptab e LEFT OUTER JOIN depttab d ON (e.empid = d.empid) and \$CONDITIONS" -m 1 --target-dir /SQOOP_DATA/LFTJOIN1;
+22) sqoop import --connect jdbc:mysql://localhost/HadoopDB --username=root --query "select e.empid,ename,esal,deptid,deptname,deptloc from emptab e RIGHT OUTER JOIN depttab d ON (e.empid = d.empid) and \$CONDITIONS" -m 1 --target-dir /SQOOP_DATA/RIGHTJOIN1;
+23) sqoop import --connect jdbc:mysql://localhost/HadoopDB --username=root --query "select e.empid,ename,esal,deptid,deptname,deptloc from emptab e LEFT OUTER JOIN depttab d ON (e.empid = d.empid) UNION select e.empid,ename,esal,deptid,deptname,deptloc from emptab e RIGHT OUTER JOIN depttab d ON (e.empid = d.empid) and \$CONDITIONS" -m 1 --target-dir /SQOOP_DATA/FULLJOIN1; 
+===============SQOOP Import File Formats =======================================================================
+24) sqoop import --connect jdbc:mysql://localhost/HadoopDB --username=root --table emptab --as-sequencefile --target-dir /SQOOP_DATA/SEQ1 -m 1;
+sqoop import --connect jdbc:mysql://localhost/HadoopDB --username=root --password=root@123 --table emptab --as-avrodatafile --target-dir /SQOOP_DATA/AVRO_NEW -m 1;
+======================================================
+25) sqoop export --connect jdbc:mysql://localhost/HadoopDB --username=root --table emptabexp --export-dir /SQOOP_DATA/emp/part-m-00000 -m 3;
+=======================================================
+Incrimental Data import
+
+26) sqoop import --connect jdbc:mysql://localhost/HadoopDB --username=root --table emptab --incremental append --check-column empid -last-value 108 --target-dir /SQOOP_DATA/INCR -m 1;
+=====================================================================
+Sqoop Merge Command:
+
+27) sqoop merge --merge-key empid --new-data /newdata/loc --onto /olddata/loc --target-dir /staging directory --class-name tablename --jar-file <get from last import>
+===========================================================================
+Sqoop Export Update/Insert
+sqoop export --connect jdbc:mysql://localhost/HadoopDB --username=root --password=root --table emptab --export-dir /update_export -m 1 --update-key empid --update-mode allowinsert/updateonly
+===========================================================================
+
+Compression Techniques.
+
+28) sqoop import --connect jdbc:mysql://localhost/HadoopDB --username=root --password=root@123 --table emptab --target-dir /SQOOP_DATA/COMPRESSED --compress -m 1;
+29) sqoop import --connect jdbc:mysql://localhost/HadoopDB --username=root --password=root@123 --table emptab --target-dir /SQOOP_DATA/COMPRESSEDSNAPPY --compress --compression-codec org.apache.hadoop.io.compress.SnappyCodec  -m 1;
+
+
+
+
+Sqoop Notes :
+
+1) As and when we issued the import command, sqoop will execute BoundingValsquery to get the min and max value of the primary key available in the table.
+   Base on the result of the query, it will distribute the records to the threads.
+   
+2) Depending on the data available in the table we need to choose no. of mappers.
+
+3) cluster_data.worker_node_hostname.length will get the num of mappers available in a cluster
+4) Hive default warehouse directory : /user/hive/warehouse
+5) We could able to import the tables only to default hive database. We can't import them to a specific database.
+6) Using import-all-tables we can't filter the data by performing where conditions
+7) 
+==========================================
+
+1) In order to create hive tables directly from sqoop command we have below scenario
+
+
+    sqoop import-all-tables --connect jdbc:mysql://localhost/HadoopDB --username=root -P -m 6 -- hive-import --hive-overwrite --create-hive-table --verbose
+    
+2) --boundary-query : Will be used for custom boundaries.
+3) If a table don't have primary key, sqoop can't calculate the min and max values for distributing the data to threads. In this we have to use only
+   one thread or by using split-by (indexed column name) we can distribute the data among the threads.
+4) --query (using this we can fetch the data from multiple tables by applying JOINS)
+5) 
+
+
+===================================== Importing data to HIVE tables ====================
+
+1) Importing data to a existing hive table : sqoop import --connect jdbc:mysql://localhost/HadoopDB --username=root -P -m 1 --table deptab1 --hive-import --hive-overwrite --hive-table sqoop_import.departments --hive-home /RAMA_HIVE_WAREHOUSE
+2) Creating hive table and importing the data : sqoop import --connect jdbc:mysql://localhost/HadoopDB --username=root -P -m 1 --table deptab1 --hive-home /RAMA_HIVE_WAREHOUSE --hive-import --hive-overwrite --hive-table sqoop_import.departments_test --create-hive-table
+===================== Incremental Data Import ==========================
+1) sqoop import --connect jdbc:mysql://localhost/HadoopDB --username=root -P -m 1 --table deptab1 --hive-home /RAMA_HIVE_WAREHOUSE --hive-import  --hive-table sqoop_import.departments --where "deptid>205" --append
+
+                       (OR)
+                       
+================================= Change Delimiter =============================
+
+1) --enclosed by (with this we can enclose the fields with some character. ex : --enclosed by \" --> "1000","RAMA","SEC"
+2) --escaped by (while importing we can escape some special characters or junk characters from the data)
+3) sqoop import --connect jdbc:mysql://localhost/HadoopDB --username=root -P --table emptab1 --m 1 --target-dir /SQOOP_IMPORT_NEW --fields-terminated-by '|' --lines-terminated-by ':' --enclosed-by \"
+4) --null-string (with this we can replace the string column null value with some character)
+5) --null-nonstring (with this we can replace the non-string column null value with some character)
+======================================= Sqoop Export ===========================
+
+1) In case of export, sqoop will distribute the process among the mappers by using files. blocks and splits. Internally it will generate insert queries and loads the data to db tables.
+===================================== Sqoop Export -Merge/Upsert ===================================
+
+1) --update-key (Primary key/Unique key), --update-mode (allowinsert/updateonly), (update-key can have composite key also)
+2) if we don't specify update mode, by default it will perform the Update operation only, it will not allow insert.
+3) When the target table in DB doesn't have a primary/unique key, sqoop will perform only the insert operation.
+4) --staging-table and --clear-staging-table (It is always better to import data to staging tables first in case of import into tables with out having primary/unique keys)
+   to eliminate duplicates and to overcome sqoop job failed cases.
+=========================== Sqoop Export Delimiters ================================
+
+1) If we want to export data which fields are terminated by null character and lines with new line character. Also any special characters with NULL values in DB
+
+    sqoop export --coonect jdbc:mysql://localhost/HadoopDB --username=root -P -m 1 --table departments --export-dir exportdirectory --input-fields-terminated-by '\00' --input-lines-terminated-by '\n'
+    --batch --input-null-string nvl --input-null-non-string -1
+In this case, what ever the data availabe in HIVE table with default parameters and data with special characters will replaced to null and exports data into table.
+============================================= Sqoop File Formats ==================================
+
+1) --as-avarodatafile (It stores the data in JSON format) (JSON : Java script object notation)
+2) --as-sequencefile (It stores the data in binary format)
+================================== Sqoop list and eval ===============================
+1) using eval, we can interact with DB directly using SQOOP. There won't be any HDFS interaction. Using this we can invoke stored procedures as well.
+2) 

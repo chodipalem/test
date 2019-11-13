@@ -1,0 +1,42 @@
+1) Regular Expression is a String represents a sequence of Characters
+2) SED stands for Stream Editor, used to process text in the files.
+3) What ever the commands executed through SED, will not modify the Input file. The output of SED will be displayed on STDOUT
+4) Basic Syntax of SED : /pattern/action (The slash is used as a delimiter for separating both the pattern and action)
+5) p --> Print the lines d --> delete the lines
+6) s/pattern1/pattern2 (It will substitutes the pattern1 with pattern2)
+7) cat passwd | sed 'd' (It will delete all the lines from passwd file)
+8) sed 'd' passwd (It will also delete all the lines from passwd, without using cat command)
+9) sed '3d' passwd (It will delete the 3rd line of passwd file)
+10)sed '1, 27d' passwd (It will delete the lines starting from 1 to 27)
+11)sed '2,5!d' passwd (It will delete all the lines except 2 to 5)
+12)sed '2~3d' passwd (It will delete the 2nd line, it will leave 3 lines and it will again delete 5th line and continues till the end of the file)
+13)sed -n '1,3p' passwd (It will print the lines starting from 1 to 3, -n should be used to avoid duplicate printing)
+14) Substitute command is used to substitute one string with another string
+15) Basic Syntax : s/pattern1/action ('/' will be used as delimiter)
+16) sed 's/root/rama/' passwd (It will replace the first occurence 'root' of each line with 'rama')
+17) sed 's/root/rama/g' passwd (It will replace all the occurences 'root' to 'rama')
+18) sed 's/root/rama/ig' passwd (It will replace all the occurences of root to rama irrespective of case)
+19) sed 's:/root:/rama:g' passwd (It will replace /root to /rama)
+20) sed 's/root//g' (it will replace root with space)
+21) sed '3s/root/rama/g' (It will replace the root with rama only on 3rd line)
+22) sed '1,3s/root/rama/ig' (It will replace root woth rama starting from 1 till 3rd only, It will not replace the rest of lines)
+
+Regular Expressions provide more flexibility in pattern matching
+
+23) ^ (Starting of the line)
+24) $ (End of the line)
+25) . (Any single character)
+26) * (matches zero or more occurences of the character)
+27) [chars] (Matches any character given in the 'chars'
+28) /[tT]he/ --> Matches T and t
+29) /^$/ (Matches Blank Lines)
+30) /*/ (Matches one or more spaces)
+31) [a-z] (matches a single lower case letter)
+32) [A-Z] (Matches a single uppercase letter)
+33) [0-9] (Matches a single number)
+34) [a-zA-Z0-9] (Matches a single number or letter)
+35) sed -n '/^[[:alpha:]]/p' (It prints all the lines starting with a character)
+36) [[:digit:]] (Number)
+37) sed 's/^[[:digit:]][[:digit:]][[:digit:]]/(&)/g' phone.txt (It will surround first three numbers of a telephone with () (ex: (040)2554485)
+38) Using word bound we can replace the exact strings in the entire file
+

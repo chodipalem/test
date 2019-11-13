@@ -1,0 +1,169 @@
+1) shell is represented by '$'
+2) who am i --> to display the time and date when user is logged in.
+3) cal 7 1982 --> it displays calendat month
+4) date --> it displays date and time
+5) date '+DATE:%m-%y\nTIME:%H:%M:%s' (to display custom date format)
+6) touch r1 r2 r3 (Using touch command we can create empty files, it will allow to write the content)
+7) mkdir r1/r2
+8) cat > r1 (using cat and redirect symbol, we can create a file, cntrl+d for closing the file)
+9) cat r1 r2 > r3 (It will copy the data of r1,r2 into r3)
+10) mv r3 r4 (it will rename the file r3 to r4 : r3 file will no more exist on file system)
+11) rm -r (to remove a directory)
+12) cp (for copying the files/folders from one location to other)
+13) Link (for creating replica of the files... two types of links. Hard Link and Soft Link)
+     ln old.txt new.txt (when we made changes to old file, those will get replicated in new file)
+     ln -s old.txt new.txt (it acts just as a reference)
+14) rwx (related to permissions and their numeric values are 421)
+15) By default any file created will have read and write permissions only. Execute permissions will not available
+    ie, file will have 644 permissions
+16) umask : using this we can set default permissions to the files/folders created.
+          : default alue for umask (0022) these values will be substracted from (666) so files create will have the
+            permissions (644) (rw-r--r--)
+17)ls -l (to list the permissions of the file)
+18) ls -a (to list the files and folders along with hidden files)
+19) chmod 770 test1 (using chmod we can change the file or directory permissions)
+20) uname -a (it will display kernal, OS and many details)
+21) wc -l (for line count in a file or set of files)
+20) wc -w (for word count in a file or set of files)
+21) sort filename (it will sort the content of the file in alphabetical order)
+22) cut -d"-" -f 1,3 (It will display only the first and third fields from a file having "-" as delimiter
+23) dd if=test1 of=test2 conv=ucase (it will convert the content of test1 to uppercase and writes the data into test2 new file
+    we even convert the file encoding as well.
+24) man cat (it will open the manual of a specific commands) press 'q' for returning to shell from man
+25) banner I am a Hadoop Developer (It will display the text into Stylic manner)
+26) compress filename ( it will reduce the file size by compressing the file.The compressed file will have
+    the extension .Z
+27) zcat filename.Z ( using this we read the compressed files)
+28) uncompress filename.Z (for un compressing the compressed file)
+29) # for comments. If we have multiple lines which needs to comment, then we have use '#' at the begining of each line
+30) sh first.sh ( for executing the shell scripts)
+31) A variable is a container which can hold a single unit of data at a time and stores in memory
+32) using 'read' we can read the user entered value
+33) $ to be used for calling the variables ex: echo "$my_var"
+34) a=30, echo $a
+35) There would a case where user have to provide multiple parameters as input while executing the scripts.
+    The order in which user provided the parameters, positional parameters will hold the values and execute the script.
+36) using set command we can set the positional parameter (ex : set rama sowji momi::: echo $3 : momi)
+
+37) set `cat rama` (It will set the content of rama file to positional parameters)
+38) Reverse Quotes tells the script to evaluate the statement and display on the screen
+39) using expr we can perform arthematic operations (a=10 b=20 echo `expr $a + $b`) : expr can't work for decimal values
+40) a=`echo 30.5 + 40.1 | bc`; echo $a (bc can evaluate the arthematic operations)
+41) using "Escape Sequences" we can instruct echo to display the statement in custom format
+42) echo $? ( Will return 0 when the command was successfully executed, 1 for failure)
+43) if mv $file1 $file2 then echo "file is successfully renamed" fi
+44) if mv $file1 $file2 then echo "file is successfully renamed" else echo "failed to rename" fi
+45) if [ $num -lt 10 ] then echo "Less than 10" elif [ $num -gt 20 ] then echo "gtr than 20" else echo "entered number is in between 10 &20" fi
+46) -eq (equal to),  -le (less than or equal), -ge (greater than or equal) -ne (not equal)
+47) -s will be used to check whether the file is empty or not
+48) [ -w $filename ] --> to check whether the file have write permissions or not
+49) str3="" (null variable or temporary variable)
+50) if [ $num -gt 10 -a $num -le 20 ] ( -a  is for 'AND' logical operator)
+51) -o ( OR Logical Operator)
+52) case esac (case statement start and end)
+53) until evaluate the condition false where as while evaluates for true
+54) a=4.5 b=4.5 [ "$a" = "$b" ] echo $?
+55) grep -i money filename  grep -i -n money filename grep -i -n -c money filename grep -i -n -c -v money filename
+56) passwd will available in /etc folder
+57) IFS=: (Internal Space Separator)
+58) sleep will be used for producing time delays between the commands
+59) 
+
+
+
+ crontab : It is a scheduler which can be used for scheduling our jobs on a specific time and regular intervals
+ commands
+ 
+ 1) crontab -e (For editing the cron tab)
+ 2) crontab -l (For listing the crontab entries)
+ 3) crontab -r (For removing the crontab)
+ 4) crontab -u username -e (For editing other user crontab)
+ 
+ format
+ 
+ *(1) *(2) *(3) *(4) *(5)
+ 1--> Minute (0-59)
+ 2 --> Hour (0-23)
+ 3 --> Day of month (1-31)
+ 4 --> Month (1-12)
+ 5 --> Day of week (0-6) (Sunday = 0)
+ 
+ Crontab Examples 
+ 
+ 1) To run /usr/bin/sample.sh at 12.59 every day and supress the output
+    59 12 * * * simon /usr/bin/sample.sh > /dev/null 2>&1
+ 2) To run sample.sh everyday at 9pm (21:00)
+    0 21 * * * simon /usr/bin/sample.sh > /dev/null 2>&1
+ 3) To run sample.sh every Tuesday to Saturday at 1am (01:00)
+    0 1 * * 2-7 simon /usr/bin/sample.sh > /dev/null 2>&1
+ 4) To run sample.sh at 07:30, 09:30 13:30 and 15:30
+    30 7,9,13,15 * * * simon /usr/bin/sample.sh > /dev/null 2>&1
+ 5) To run sample.sh at 2am daily
+    0 2 * * * simon /usr/bin/sample.sh > /dev/null 2>&1
+ 6) To run sample.sh twice a day. say 5am and 5pm 
+    0 5,17 * * * sample.sh
+ 7) To run sample.sh every minutes.
+    * * * * * sample.sh
+ 8) To run sample.sh every Sunday at 5 PM.
+    0 17 * * sun  sample.sh
+ 9) To run sample.sh every 10 minutes.
+    */10 * * * * sample.sh
+ 10) To run sample.sh on selected months.
+     * * * jan,may,aug *  sample.sh
+ 11) To run sample.sh selected days.
+     0 17 * * sun,fri  sample.sh
+ 12) To run sample.sh first sunday of every month.
+     0 2 * * sun  [ $(date +%d) -le 07 ] && sample.sh
+ 13) To run sample.sh every four hours.
+     0 */4 * * * sample.sh
+ 14) To run sample.sh every Sunday and Monday.
+     0 4,17 * * sun,mon sample.sh
+ 15) To run sample.sh 30 Seconds.
+     * * * * * sample.sh
+     * * * * *  sleep 30; sample.sh
+
+16) To run multiple jobs using single cron.
+    * * * * * sample1.sh; sample2.sh
+
+17) To run sample.sh on yearly ( @yearly ).
+    @yearly sample.sh 
+
+18) To run sample.sh on monthly ( @monthly ).
+    @monthly sample.sh
+
+19) To run sample.sh on Weekly ( @weekly ).
+    @weekly sample.sh
+
+20) To run sample.sh on daily ( @daily ).
+    @daily sample.sh
+
+21) To run sample.sh on hourly ( @hourly ).
+    @hourly sample.sh
+
+22) To run sample.sh on system reboot ( @reboot ).
+    @reboot sample.sh
+    
+ ====================================================
+ 
+ tail (Represents last few linesof a file, by default 10 lines)
+ tail /path/to/file
+ tail -n 4 /etc/group (To read only last 4 lines of a file)
+ head (Represents first few linesof a file, by default 10 lines)
+ head /path/to/file
+ head -n 12 (To display first 12 lines)
+ ========================== SCP Command ====================
+ 
+ In order to copy the files between remote systems then we go for SCP (Secure Copy protocol)
+ 
+ 1) scp /home/stacy/images/image*.jpg stacy@myhost.com:/home/stacy/archive (It copies the files to the system myhost using stacy into the folde /home/stacy/archive
+ 2) scp stacy@myhost.com:/home/stacy/archive/image*.jpg /home/stacy/downloads (For downloading)
+ 3) scp user@myhost.com:/home/user/dir1/file.txt user@myhost.com:/home/user/dir2 (For copying the files between two remote locations)
+===============Difference between ping and telnet ========================
+1) ping is used to test the connectivity of a server from other server
+2) telnet is used to check the connectivity of a service on a sever. Ie, SMTP, SQL etc
+ 
+ 
+ 
+ 
+ 
+ 

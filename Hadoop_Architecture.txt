@@ -1,0 +1,164 @@
+HDFS Package : org.apache.hadoop.fs
+
+Block Availability on HDFS :
+
+1) Firstly the file is divided into multiple blocks base on Block Size configured, bu default it is a 128 MB. On HDFS, Every Block
+   is managed by using its ID, IP Address of the Data node where it is stored and Size of the block.
+2) Super user of HDFS is hdfs
+
+1) Big Data Problems
+a) Storing of Big data b) Processing of Big Data
+2) Why Hadoop is a distributed file system?
+   For example, if we want to read 1TB of data with a single Highend it might would take 50 min. If we use DFS, the 1 TB data
+   will be divided into multiple chunks and can be processed by multiple commodity machine and can read the entire data with in 5 min
+3) Hadoop Components
+  a) HDFS : For storing the Big Data
+  b) Mapreduce/Yarn : For processing the Big Data
+4) HDFS has mainly two deamons
+  a) Name Node : It is the master deamon, that runs of Master machine ie, an High end machine
+  b) Data Node : Data node is a slave machine that can run on commodity Hard ware
+  c) We can have one Master machine and Multiple Slave machines
+5) Coming to Processing Yarn/Mapreduce also have two components
+  a) Resource manager which runs on Master machine
+  b) Node manager which runs on Data node
+6) Name node is responsible for managing the data on HDFS and Resource manager is responsible for executing processing task over the data.
+7) Name nodes maintains the meta data of the data stored on Data nodes. Data nodes sends an Heart beat regularly to Name node, by which
+   Name node can confirm that Data node is alive.
+Name Node:
+
+1) It is the master deamon
+2) maintains and manage data nodes
+3) Records metadata, ie, Location of Blocks stored, Size of files, permissions and Hierarchy
+4) Receives Heart Beat and Block Information from all the Data nodes.
+
+Data Nodes :
+1) These are the slave nodes which actually stores the data in the cluster
+2) Serves read and Write requests made by client
+
+8) Hadoop Cluster Architecture : Basically it is a Master Slave topology
+   Master machine connects to slave machines which are available on racks using core sitches of the cluster. Data machines are
+   stored on various racks.
+   
+9) Data stored as Blocks in HDFS. Entire data will be divided into multiple chunks of data and stored as Blocks
+10) The default size of each block is 128 MB. Using HDFS-SITE.xml file configuration, we can changes the block size as a multiples of 64.
+11) Since we are using the commodity hardware, its not good to store a single copy of the data. If the copy of the machine fails, then there
+    will a loss of data
+12) Default replication factor is 3.ie, any file that stored on HDFS have 3 copies on different data nodes.
+13) The replica of a Block cannot create on same rack.
+
+Architecture of HDFS :
+
+1) The Name node / Master node which stores the meta data of all the data nodes. ie, the information of all the data blocks available on all the 
+   data nodes.
+2) Client can Read/Write data from data nodes.
+3) Write Mechanism : A request will be made by client to Name node for writing a block of data. Name node sends the datanode information where client can write the data
+   Client connects to one of the datanode and writes a block into it. It is the responsibility of the datanode to create a copy on other data nodes
+   base on replication factor. Once the write operation is successful, Name node stores the meta data of the block.
+   Blocks are created in parallel manner and replicas are created in sequential manner.
+4) Read Mechanish : Client request a read on a particular block to Name node. Name node sends the information of Datanodes where the block is available to the client.
+   Client make connection with the data nodes, and reads the data from data nodes. Name node ensures the client, to get the data from data nodes which are close enough
+   which couldn't require more network bandwidth in reading the data.
+   =============================================
+   
+   Hadoop Commands :
+   
+   1) jps : To get the list of deamons (namenode, datanode, resource manager, node manager)
+   2) hadoop verion
+   3) hadoop fsck / (fsck command gets the health of hadoop file system) : Using this we can the information about
+      Total Size, Total dirs, Total Files, Total Blocks, Replicated Blocks, Replication factor, Average Block replication, Missing Replicas, No. of Datanodes, No. Of Racks
+   4) hadoop fs -ls / (To list the directories of dhfs file system)
+   5) hadoop fs -put file.txt /rama (To copy data onto hdfs)
+   6) hadoop fs -cat file.txt (to view the content of the file available on HDFS)
+   7) Name node runs on 50070
+   8) Using brower of datanode, we can view the file
+   9) hadoop fs -help (Help Command)
+   10) hadoop fs -ls /user (For checking the user space)
+   11) hadoop fs -chown -R rama:rama /user/rama
+   12) hadoop fsck filepath -files -blocks -locations
+   13) hadoop fs -ls (It will list the content of User Space)
+   14) 
+   
+   
+==================== ITVERSITY ==========================
+
+1) Heart Beat : Datanodes sends heart beat to Name node at frequent and regular intervals. As part of Heart beat additional information about
+   available storage will be sent to name node.
+   
+2) ps -ef |grep node (To check whether the Hadoop Deamons were up and running or not)
+3) Configuration Files
+  a) hadoop.env.sh
+     1) 
+  b) If any property with final modifier we can't change its value during the run time
+4) About Block Size : File is divided into multiple blocks base on dfs.blocksize parameter configured and distributed over the data nodes.
+5) If we want to copy a file with a custom replication factor : hadoop fs -Ddfs.replication=1 -put /user/file1.txt
+6) A block used for one file, cannot be used for other. Blocks are unique across the files and HDFS.
+7) hadoop fsck /user/filename -files -blocks -locations (To find the entire details of file stored o HDFS)
+8) We can configure the heart beat interval using the parameter dfs.heartbeat.interval
+9) Checksum is a mechanish which ensures the blocks/files are not corrupted during READ/WRITE on HDFS.
+10) Meta Data : If we copy a file on to HDFS, it will be divided into multiple blocks based on dfs.blocksize and replication factor and stores on different data nodes.
+    The Mapping between the file, data blocks and locations is nothing but meta data.
+11) Each slave node runs a datanode deamon
+12) Meta data stores in the file with the extension .meta files.
+13) Datanode : It is one of the hadoop deamon which runs on slave nodes. which controls the access to blocks and communicates with Name node.
+14) ps -ef|grep DataNode (To check whether the data node is up and running or not)
+15) Namenode : It is the main deamon of hadoop and it is the single point of failure.It stores all the meta data. Meta data stored on disk, as and
+    when the Namenode starts up, it will read the meta data and stores in memory.
+16) dfs.namenode.name.dir (It is the Name node directory)
+17) Name node process name : proc_namenode
+18) hdfs-site.xml is the configuration file for Name node. "dfs.namenode.name.dir" directory will have the fsImage and editLog files.dfs.datanode.data.dir is the location of datanodes.
+19) core-site.xml parameter fs.defaultFS value tells us where the name node is running. ie, IP and port number where the name node is running
+    On each datnode, we will have the core-site.xml, using "fs.defaultFS" value Datanodes use to communicate with Namenode.
+20) Secondary Name node : proc_secondarynamenode
+21) When ever there is a change in metadata of Namenode, these changes will be logged into edit log file.
+22) At every regular interval, a check point is applied on Namenode, then fsimage file get updated.
+23) Namenode starts in safemode, it loads the fsimage information into memory. It will do handshake ith the datanodes for block locations. Once every thing is done properly,
+    then Namnode leave the safe mode.
+24) Parameter dfs.namenode.https-address will have the IP Address and Port number of Name node.
+=================================== About Hadoop Configuration Files =================
+
+1) master and slave files will have the hostnames where the Namenode, Datanode and Job Trackers are running.
+2) hadoop-env.sh (This file contains Java Home path, Heap Size, log path and is being used for class path settings.
+3) hdfs-site.xml
+   a) It will have the data, namenode directories. It will also have the replication factor information
+4) map-site.xml (It will have the hostname and Port details of the Job Tracker)
+5) core-site.xml
+   a) 
+  
+========================= Hadoop Commands ==========================
+
+1) hadoop fs -cat -ignoreCrc /user/file.txt (It will ignore the checksum, while reading the content of the file)
+2) hadoop fs -chown root:hduser /user/file.txt (To change the ownership of a file or directory)
+3) hadoop fs -chgrp -R hduser /user (To change the group name of a file or directory)
+4) hadoop fs -chmod -R 777 /user/file.txt (For changing the permissions)
+5) hadoop fs -appendToFile /user/file,txt (To append data to an existing file using STDIN)
+6) hadoop fs -copyFromLocal <local> <hdfs> (It is used to copy files/directories from Local to HDFS) (-f : to overwrite)
+7) hadoop fs -put <local> <hdfs> (It is used to copy files/directories from Local to HDFS) (-f : to overwrite)
+8) hadoop fs -get <hdfs> <local> (It is used to copy the files from hdfs to local) (-ignoreCrc : To ignore Checksum)
+9) hadoop fs -copyToLocal <hdfs> <local> (It is used to copy the files from hdfs to local) (-ignoreCrc : To ignore Checksum)
+10) rm -rf .Trash/ (To remove the Trash)
+11) hadoop fs -cp <hdfs>/loc/file1 <hdfs>/loc2/file1 (To copy data from one location of HDFS to another) (-p : preserves the status of the file, ie, permissions, datetime etc)
+12) hadoop fs -count <hdfsdir> (hich provides the directory count, file count, content size, path)
+13) hadoop fs -df /user/root (It provides the used and free space of the filesystem)
+14) hadoop fs -du .user/root (It provides the disk usage)
+15) hadoop fs -expunge (When we delete a file from HDFS, it will be available in Trash,for deleting permanently we have to clear Trash)(to flush/clear the Trash/recyclebin)
+16) hadoop fs -find /path filename (To search the files in the file system)
+17) hadoop fs -getmerge /cards/file*.txt mergedfile.txt (It gets all the files in the specified directory, merge them into a single file and copy to local)
+18) hadoop fs -ls / (To list the content of the directory)
+19) hadoop fs -mkdir /d1 (To create a directory on HDFS)
+20) hadoop fs -mkdir -p /d1/d2/d3 (To create sub directories)
+21) hadoop fs -moveFromLocal  (It is same as put, except the source will be deleted after it is copied)
+22) hadoop fs -moveToLocal ( Not yet implemented)
+23) hadoop fs -rm /cards/file*.txt (To remove files from HDFS)
+24) hadoop fs -rmr /cards (To remove directory from HDFS)
+25) hadoop fs -rm -skipTrash /cards/file*.txt (To delete the files from /cards by skipping Trash, immediate deletion)
+26) hadoop fs -setrep  2 /cards/file.txt (For resetting the replication factor)
+27) hadoop fsck /cards/file.txt (For checking the replication factor)
+28) hadoop fs -put -Ddfs.replication=2 file1.txt /cards (Setting the replication factor while copying the file to HDFS)
+29) hadoop fs -stat %r /cards/file1 (To get the replication factor)
+30) hadoop fs -tail /cards/file2 (To view last 1kb data of the file)
+31) hadoop fs -test -d /cards (To test the file is a directory or not)
+32) hadoop fs -text /cards/file.zip (It converts the zip file into text file)
+33) hadoop fs -touchz /cards/rama.txt (To create zero size file)
+34) hadoop fs -usage text (It will display the usage of text command)
+
+

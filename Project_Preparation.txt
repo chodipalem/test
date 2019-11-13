@@ -1,0 +1,50 @@
+Unidoop
+
+	About Company : I had worked for Intense Technologies limited for around 8 years, outof which two years on Big data
+	                It's both a Product and service based company supporting major Telecoms
+	                with Bill Presentment and Bill Analytics.
+	                
+	                My last project with Intense is Unidoop, with which we have supported
+	                one of our big customer, Reliance JIO, Mumbai.
+	                
+	                Coming to objective of the project, Client required to generate Invoice pdf for his customers
+	                having mobile account information, usage summary along with Itemization. Also he needs a set of reports 
+	                for supporting his business and for customer care purpose. we have worked with multiple teams
+	                and involved in integration of multiple applications to meet the customer requirement.
+	                
+	                As part of it, SAP is one of the core billing system which involved in collecting the Usage,apply required charges 
+	                and emits the final customer invoice as an XML and flat files. These XML and flat files will be made available
+	                to our application Unidoop. Unidoop process these files and stores the invoice information in Hadoop
+	                using Hive. Here in hadoop we perform data analysis using Hive and support both EBPP and Bill Analytics teams,
+	                with the processed data. EBPP will generate Customer Invoice in PDF for ebill purpose and AFP for Printing Purpose.	                
+	                OBI team consumes the data for bill analytics supporting both Business and Customer care people.
+	                
+	                Coming to Technical aspects, as a pre-process we have been parsing the Invoice XML using our custom
+	                build IDM (Intelligent data manager) instead of pig, due to huge amount of Business logic and external
+	                DB lookups involved in processing of the same. Data bifurcated into Account Information, Usage Summary, Itemization
+	                and stored as text file and loaded into Hive Staging tables. In case of flat files, we have used pig in bifurcating the same.
+	                
+	                There are some around, 16 static reports like
+	                1) Roaming Charges Summary Report
+	                2) Roaming Charges details report
+	                3) Usage charges summary report
+	                4) Usage charges detail report
+	                5) Invoice Summary report
+	                7) Invoice details report etc along with the data required by EBPP team for bill presentment.
+	              
+	                 Using SQOOP export the processed data, will be exported to EBPP Database.
+	                 
+	  Roles & Responsibilities: As we are a small organization, we have to involve in all the phases of the project
+	  starting from, 
+	  
+	  1) Requirement gathering
+	  2) Analysing the Large Data sets
+	  3) Mapping Document preparation, ReaD document preparation, Publishing PSR (Project Status report)
+	  4) Interacting with all the stakeholders
+	  5) Involved in data transformation tasks which are written in PIG and our custom Tool IDM
+	  6) Involved in writing and optimizing Hive Queries for data analysis
+	  7) Worked with Sqoop in loading the data to External DB
+	  
+	 
+	                
+	                
