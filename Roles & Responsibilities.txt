@@ -1,0 +1,103 @@
+Tableau servers -Installation, Configuration, Performance tuning, sizing, Scaling of services and architecture design.
+Security and Authentication - Security design, SSO, LDAP an Active directory.
+
+
+
+--------------------------------------------------------------------------------
+Key Qualifications
+
+Knowledge of Cognos software administration, planning and reporting
+In-depth knowledge of business intelligence and data warehousing
+Experience in software programming
+Ability to deal with on-shore and off-shore clients
+Deliver work using best practices in the Cognos environment
+Ability to complete assigned work on time
+Good verbal and written communication proficiency
+Ability to work in a team environment with colleagues, clients, third parties and the management
+Assess risk and take decisions quickly
+Knowledge of Cognos software administration, planning and reporting
+In-depth knowledge of business intelligence and data warehousing
+Experience in software programming
+Ability to deal with on-shore and off-shore clients
+Deliver work using best practices in the Cognos environment
+
+Designation: Cognos System Administrator
+Job responsibilities:
+
+Provide support to the company's planning, system administration and business intelligence reporting in a Cognos environment
+Manage and install the Cognos products effectively
+Ensure maintenance and security control of the Cognos products and solutions
+Design and implement data warehousing and ETL tools
+Take over all technical issues in the system and resolve them timely
+Handle several projects at a time and complete them successfully through 'Cognos Administration' tool
+Prepare report and maintain database of application and processes through Cognos
+Monitor the Cognos environment and check the usage of the environment, reports, etc.
+Take corrective actions on system administration faults and defects
+
+Designation: Cognos System Administrator
+Job Responsibilities:
+
+Engaged in installation, configuration and maintenance of Cognos Administration tool using Cognos 8 BI
+Provided support in Cognos planning and business intelligence needs
+Used data warehousing and ETL tools to design and implement plans and reports
+Drafted complicated reports through the use of Cognos tools and maintained a database of the same
+Ran data quality check and resolved the drawbacks or flaws in the system
+Ensured proper scheduling and administration of Cognos connection
+Evaluated the overall system performance of Cognos suite to meet the business needs
+
+
+
+------------------------------------------------------------------------
+
+Below are some of roles and responsibilities of a tableau Admin
+
+ 
+
+1.Familiar with Installation, configuration, patching and upgrading of Tableau tool across the environments
+
+Manage the application’s users, groups, and integration with Active Directory
+
+Automate monitoring & server job processes
+
+4.Should be capable of doing Tableau Server Management (like Clustering, Load Balancing, User Management etc)
+
+5.Knowledge of Tableau Licensing
+
+6.Should be familiar with tableau migration and scheduling.
+
+7.Experience in taking back ups and restoration of Tableau repository
+
+8.Good knowledge on Tableau Metadata tables and Postgre SQL
+
+
+
+Overall Responsibilities:
+Responsible for handling support tickets and providing resolution within SLA.
+Responsible for maintaining Tableau application server running 24x7.
+Responsible for handling new developments as well as enhancements for existing dashboards.
+Responsible for managing and administrating various Sites on Tableau Server.
+Responsible for Server administration and performing regular maintenance activity.
+Work with Business users to understand reporting requirement and provide optimal solution.
+Design and develop ETL loads in SSIS for custom solutions.
+Document design and development efforts and maintain versioning for code scripts. 
+
+
+Note: https://www.livecareer.com/resume-search/r/tableau-admin-developer-113393248
+
+----------------------------------------------------------------------------------------------------
+Ability to complete assigned work on time
+Good verbal and written communication proficiency
+Ability to work in a team environment with colleagues, clients, third parties and the management
+Assess risk and take decisions quickly
+
+Cognos tool suite EP BI Administration
+
+
+Experience working with various data source like Oracle, SQL Server, MS-Access, Sharepoint
+
+Responsible for maintaining Tableau application server running 24x7
+
+Created and maintained an inventory of application objects (packages, reports, cubes, content, etc.)
+
+--------------------------------------------------------------------------------------------
+Optum maintains operations across North America, South America, Europe, Asia Pacific and the Middle East. Our innovative partnerships provide technology and tools that enable unprecedented collaboration and efficiency.

@@ -1,0 +1,326 @@
+1) It hides the complexity of Mapreduce.
+2) Latency of HQL is very high, very less builtin functions, views were read-only,
+   It supports multi-table insertion, supports array, map and struct data types.
+3) By using Views, we can hide the complexity of queries
+4) Derby is the Embedded metastore of hive, which allows single user to work on.
+5) Hive consists a metastore which stores all the information about the hive tables
+6) Hive Execution engine is responsible to convert HQL to Map reduce jobs
+7) With Embedded metastore only one user can connect to hive shell at a time
+==================================
+
+About Hive Clients
+
+1) Using $hive, we can connect to Hive CLI directly. Using Thrift protocal, hive CLI connects to Hive Server1 using Thrift Protocol
+2) With Beenline CLI we can connect to Hive Server2
+3) Beenline CLI connects to Hive Server2 using JDBC
+=======================================
+About Hive Databses
+
+1) describe database rama; Gives the database information like Warehouse location of DB, user information
+2) describe databse extended rama; it also display the DB properties
+3) using drop statement we can drop the database. If we have any tables in DB, then we have to use CASCADE for dropping the database
+==========================================
+
+About Hive Tables
+
+1) a) Manage Table
+   b) External Table
+2) LOAD DATA inpath '$path' into table rama;
+====================================================
+
+Hive Inserts
+
+1) Loading data into Hive tables
+
+  load data local inpath '$path' into table rama;
+  load data inpath '$path' overwrite into table rama;
+  
+2) Inserting data to another table
+
+  INSERT OVERWRITE into table rama
+  select * from rama1;
+
+3) Multi Table Insert
+
+a) It minimizes the number of data scans. Hive can insert data into multiple tables by scanning the input once.
+Syntax :
+
+a) FROM EMP
+   INSERT OVERWRITE int0 table delivery select * where dept='delivery'
+   INSEET OVERWRITE into table testing select * where dept='testing';
+   
+   =============================================
+   
+   Hive Partitions
+   
+   1) Partitions divides the table into multiple slices based on the paritioned column. Partitions will increase the query performance
+      without scannong the entire table. There are two types of partitions in Hive
+      
+      a) Static b) Dynamic
+      
+   Static Partition : We will create a satic partition based on a column whose values are well known early to us.
+   
+   2) Dynamic partitioning : If we want to create a partition on a column whose values are unknown then we have to go for dynamic partition. In case
+      of dynamic partitioning, partitions will be created dynamically based on the values of the partitioned column.
+      
+      For dynamic partitioning we have to enable below two parameters
+       a) hive.exec.dynamic.partition=true,
+       b) hive.exe.dynamic.partition.mode=nonstrict;
+      
+   3) We can add, rename, remove, exchange, drop,archieve the partitions using alter statement.
+   4) Recovering a partition
+   
+       alter table rama recover partitions;
+       
+   5) If the partition column is not used in the where clause of a query, query will scan the entire table and will not have effect of partition.
+   6) Dynamic partition column must need to define at the end.
+   
+   ====================================================================
+   
+   Hive Bucketing
+   
+   1) Bucketing will divide the large data sets into subsets which increases the performance of our queries.
+   
+   2) Bucketing will happen using hash algorithm and then modulo on the number of buckets. ie, it uses hash algorithm in distributing the data to buckets.
+   3) By using bucketing we can make sampling more efficiently.
+   4) In case of partition the number of partitions will change base on the values of the partitioned column. But incase of Bucketing, the number of slices
+      would remain constant.
+   5) In order to enable bucketing we have to enable hive.enforce.bucketing=true;
+  =======================================
+  
+  Hive Table Sampling
+  
+  1) Using TABLESAMPLE, we can sample the data, ie we can select sample data randomly
+     ex: select * from emp TABLESAMPLE(10 rows). It will display the first 10 rows from each split.
+     
+     =====================================
+     
+     Order BY : It is used for  sorting the data. It will perform total ordering using single reducer.
+     Since it uses single reducer, it takes lot of time in sorting the large data sets which has impact on the performance.
+     In strict mode hive makes compulsory to use LIMIT with ORDER BY to reduce overhead on the single reducer.
+     ex: select * from emp order by sal;
+     ===============================================
+     SORT BY : Using sort by we can sort the data.
+     Hive uses the columns specified in SORT BY to sort the input before feeding to reducer. So,the output of each reducer is ordered but total ordering
+     can't performed. The output will be one or more files with overlapping ranges.
+     ex: select * from emp sort by sal;
+     =========================================
+     Distributed By : It is used to distribute the rows among the reducers. It will ensure the non-overlapping of ranges. It will not sort the data.
+     select col1,col2 from rama distribute by col1;
+     =================================================
+     Cluster By : By using Cluster By we can achieve both distribution and sorting. It ensures the non-overlapping of range of values and also it
+     sorts the data at each reducer.
+     
+     ex : select col1, col2 from emp cluster by col1;
+     ================================================================
+     Hive Data types
+     
+     1) Primitive (Integer, Boolean, Float(Single precision), Double(Double precision), String)
+     2) Complex
+        a) struct : It is a collection of elements with different types.
+        
+          ex : create table customer_info(custid:int, address struct<add1:string, add2:string, add3:string>)
+               row format delimited fields terminated by '|'
+               collection items terminated by ':';
+     we can access the collection element by using the collection name
+     
+     sample data :
+     
+     101|add1:add2:add3:add4
+     102|add1:add2:add3:add4
+     
+        select address.add1 from customer_info;
+        
+        b) Array : It is a collection of elements with same data type. We can access the elements of an array by using the array indexes.
+        
+                  ex : create table customer_info(custid:int, address array<add1:string, add2:string, add3:string>)
+	               row format delimited fields terminated by '|'
+               collection items terminated by ':';
+           sample data:
+               101|add1:add2:add3:add4
+               102|add1:add2:add3:add4
+               
+               select address[0] from customer_info;
+               
+           When we access an array with an index which is out of range, it will return null
+           
+        c) MAP : It is an unordered collection of Key-value pairs.Keys must be primitive, values can be any thing
+           create table tab1(name:string, id:int, perf map<string, int>)
+           row format delimited fields terminated by '\t'
+           collection items terminated by ','                   
+           MAP keys are terminated by ':';
+           
+           sample data:
+           
+           rama	101	maths:99,english:100,physics:99
+           sowji	102	maths:100,english:99,physics:100
+           
+           select perf["maths"] from student;
+           ====================================================================
+           
+           Hive Joins
+           
+           1) Inner Join (Mappers:1, reducers:0))(It will use Map Join to complete the Join)
+           
+           select emp.*, dept.* from emp JOIN dept ON (emp.deptno = dept.deptno);
+           
+           2) Full outer Join (Mappers:2, reducers:1)
+           
+           select emp.*,dept.* from emp FULL OUTER JOIN dept ON (emp.deptno = dept.deptno);
+           
+           3) RIGHT OUTER JOIN : It returns all the records from the right table and the matched records from left table base on JOIN key
+           
+              select emp.*, dept.* from emp RIGHT OUTER JOIN dept ON (emp.deptno=dept.deptno);
+           4) LEFT OUTER JOIN : It returns all the records from the left table and the matched records from right table base on JOIN key
+              select emp.*, dept.* from emp LEFT OUTER JOIN dept ON (emp.deptno=dept.deptno);
+              
+           5) Map Join : One table should be small enough to fit in memory. Join will happen in each mapper and eliminate the reducer
+              select /*+ MAPJOIN(dept) */ emp.*, dept.* from emp JOIN dept ON (emp.deptno=dept.deptno);
+              
+              We can set the Map Join automatic by setting the parameters
+              hive.auto.convert.join=true
+              hive.mapjoin.smalltable.filesize=25
+         ============================================================================
+         
+         Hive Views
+         
+         1) View is purely a logical construct with no physical data behind it. when we query on View that time the data from the underlying tables
+            were fetched and showed to the user
+         2) Using views we can p[resent the data differently from what exactly available on the disk. ie, we can show aggregate values instead the 
+            individual values which can hide the quey complexity. Even with view we can hide the sensitive data.
+            
+         3) Hive view are read-only. We can't modify the data in the underlying tables. ie, we can't insert or load data to underlysing tablesvia view.
+            create view rama_view as select * from rama;
+         ===================================================================================
+         
+         Hive Indexes
+         
+         1) For improving the query performance we have build indexes.
+         ======================================================
+         Hive Storage File Formats
+         
+         1) The default storage format is delimited text with one row per line
+         2) Sequence Files : Sequence file stores the data in binary format. We can apply compression on the sequence files. When compared
+            to delimited text files the performance of the queries is good. Generally the intermediate outputs will be stored in Sequence file format
+         3) RC File Format : Record Columnar Format. Which stores the data in columnar format. Good for reading, slower in writing the data
+         4) ORC : Optimized ROW Columnar format (stored as ORC TBLPROPERTIE("orc.compress"="SNAPPY")
+            hive.default.fileformat=ORC; (Enables ORC format as default file format)
+         5) AVRO : It stores the metadata along with the data. It supports Block compression
+         6) PARQUET : It is also a columnar format which is efficient in compression and query processing. New columns can be added at the end
+            of the structure.
+        ==========================================================================
+        Hive Optimization
+        
+        1) We can achieve the hive optimization with the below techniques
+           a) MULTI TABLE INSERTS : By reading table only once and load the data to multiple tables. Every time no need to read table for individual table inserts
+           b) Partitioning : 
+           c) Bucketing
+           d) Using ORC file format
+           e) Using Tez engine (hive.execution.engine=tez;)
+           f) Using Vectorization (hive.vectorized.execution.enable=true; hive.vectorized.execution.reduce.enable=true;)
+           g) Enabling Map Joins and Bucketing JOINS
+           
+        =====================================================
+        
+        Hive UDFS
+        
+        1) Creating custom UDF
+        
+          a) We need to write a class which extends UDF and have to implement evaluate() method.
+          b) Need to generate JAR file and need to add the JAR to hive
+          c) Before using the Custom UDF, we need to create a function for using the same.
+            ex: create temporary function <fname> as 'packagename.classname'
+         d) add jar 'jarlocation' for adding the jar to hive
+        
+        
+        Program :
+        
+        package com.rama.MyUDF;
+        import or.apache.hive.ql.exec.UDF;
+        
+        public class Salutation extends UDF{
+        public Text evaluate(Text input){
+        return new Text("Dear "+input.toString());
+        }
+        }
+        ==============================================================
+        
+        HCATALOG :
+        
+        1) It is a storage management layer built on Hive metastore. Using HCatalog users can read/write data from cluster using different
+           processing tools like PIG, MAPREDUCE and Hive.
+        
+        2) 
+        
+     ============================================================
+Hive Security
+
+
+1) Firstly the user authentication is managed at cluster level using either LDAP or Kerberos.
+2) And using Grant and Revoke, we can restrict the access previliges to users by creating roles and assigning to the user groups.
+ex: grant select on table <table Name> to role role_name; grant select <column_name> on table <table_name> to role <role_name>
+=============================================================================================================================
+
+How load csv data to a Hive Table
+
+1) By specifying 'org.apache.hadoop.hive.serde2.OpenCSVSerde'  as Row Format Serde we can load the CSV data into a Hive table.
+   Using the TBLPROPERTIES('skip.header.line.count'='1')
+2) How to load ORC file into a Hive Table
+
+    a) Firstly we have to get the ORC file metadata using "hive --orcfiledump -j -p <location of orc file>
+    b) using the metadata we have to create a table and dump the orc file into the table.
+3) How to load an avro file into hive table
+
+    a) Firstly we have to get the schema from avro file using "avro-tools getSchema <avro file name>"
+    b) Using the schema we can create a table and load the avro data into the file.
+      or we can specify the avro schema uri as part of TBLPROPERTIES('avro.schema.uri'='xxx.avsc')
+      
+4) How to load JSON file
+
+====================================================================================
+
+Lateral View Explode
+
+explode() : It takes an array of elements as input and outputs the elements of an array in separate rows.
+1|SATISH|Laptop,VOIP,Monitor|cab:500,toll:100,meal:500
+2|RAMYA|Computer,Mobile|cab:500,meal:700
+3|Teja|Computer,Mobile|meal:600
+
+create table employee(
+empid int, ename string, assets array<string>, expenses map<string,cost>) row format delimited fields terminated by "|" collection items terminated by ","
+map keys terminated by ":" stored as textfile;
+
+1) select empid,ename,assets_list.asset from employee lateral view explode(assets) assets_list as asset;
+2) select empid,ename,expenses_list.desc,expenses.cost from employee lateral view explode(expenses) expenses_list expenses_desc,expenses_cost;
+
+123:abc,234:bcd|123:aaa,234:bbb
+ 3) create table lv1(item1 map<int,string>, item2 map<int,string>) row format delimited fields terminated by "|" collection items terminated by "," map keys terminated
+  by ":" stored as textfile;
+  
+Question : How to process compressed(Gzip file)?
+
+           We can directly load the compressed data into a hive table. But the compressed files are not splitable we can't achieve parallelism. It leads to underutilization of our cluster. So, the recommended
+           way is to copy the data into another table which stores the data in sequence file format.
+           
+Huge number of files may effect the memory consumption of Name node. So, it is better to archive the files. Suppose, if a partition has 100 files we can archieve 
+them into 3-4 files.
+
+   ALTER TABLE table_name ARCHIVE PARTITION (partition_col = partition_col_value, partition_col = partiton_col_value, ...)
+   
+4) 
+
+   
+   
+
+
+  
+           
+         
+           
+           
+        
+        
+        
+      
+     
+     
