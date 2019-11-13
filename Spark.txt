@@ -1,0 +1,265 @@
+1) Spark is a Distributed processing Framework, used for processing Big Data, Batch Processing, Stream Processing, Data Analysis,
+Graph Processing and also used for ML on Big Data
+2) RDD: RDD is an in-memory Data structure and it is the basic abstraction of Spark. It is a collection of data distributed across the multiple nodes 
+  which is resilient and immutable. It is falut tolernt so, we can recreate the data when any data node goes downn.
+3) Spark Context : It is the entry point of every Spark application. It acts as an interface between the Cluster and the Driver. It will negotiate with the Cluster Manager
+   for the resources. It is used to create RDDs, Accumulators, Broadcast variables etc. The logic we written in Driver for processing the RDD's is sent to the executors by the SparkContext
+4) Difference Between Driver and Executor:
+   1) Spark is a Master-Slave architecture. Here the Driver acts as a Master and Executors acts as slaves.
+   2) Driver is the main program of our spark application. In driver we will create SparkContext which will negotiate with the cluster manager for resource allocation.
+   3) Whatever the logic we written in Driver for processing the RDD's is sent to the executors by the SparkContext
+   4) Executors are the processors that are running on Worker nodes and these are responsible for processing of the actual data reside on worker nodes.
+5) Difference between Yarn and Cluster Modes
+  1) Spark jobs can be submitted to Yarn either in Yarn client or cluster modes. When we submit the job in client mode the Driver will starts on the client
+     machine through which we have submitted the job. We will be having the edge node through which we will be submitting the jobs and on edge node our driver program will run.
+     In Yarn cluster mode, Driver will run on one of the Data node in the cluster.
+     
+6) Difference between Executor and Excecutor cores
+   1) Executor is a Java process, it is a Yarn container running on one of the Node Managers.  Executor core is a Thread which is started by Executor for processing the data
+7) Why Spark is faster than Hadoop?
+   1) Spark because of it's in-memory processing and Cacheable capabilities it is much faster than Hadoop. Unlike Spark, Hadoop will read and write the data to disk
+   and it won't have in-memory processing capability. Because of these spark is much faster than Hadoop
+8) Difference between transformations and  Actions?
+   1) In Spark we can perform two types of operations on the RDDs, Transformations and Actions. When we apply transformations on RDD the resultant is an RDD.
+   The transformations are lazy eveluated. Actions are used to execute the tranformations to yield the results. Examples of Tranformations are map, filter, mapPartition etc.
+   Examples of Actions are count, collect, reduce, show etc
+9) What is Lazy Evaluation and it's importance?
+  1) We have two types of operations in Spark. Transformations and Actions. Transformations will apply the logic on the RDDs and transforms to another RDDs.
+     Actions are the ones used to start the execution of Transformations. So, untill unless an Action is performed, Transformation won't execute and it is known as
+     Lazy evaluation.
+  2) Before we hit an Action, Spark will makes a clear clarity on all the tranformations involved, it can create optimized execution plan, also decides which all
+     operations can be executed in Parallel and this can happen only because of Lazy evaluation.
+10) What is Lineage in Spark?
+   1) We will be having multiple transformations involved in Spark job. Transformations will create different forms of RDDs. Spark will not store the RDDs of all
+   the transformations rather it will store the information about the dependencies in creation of RDD. ie, it will store the sequence of operations involved in getting
+   the required/final output. So, this sequence of operations is known as Lineage and using this lineage spark will reconstruct the RDDs.
+   
+11) Difference between Lineage and DAG
+   1) Lineage is a logical plan applied on different RDDs in creating the required RDD. As soon as the Action is invoked, the logical plan is submitted to
+   Catalyst optimizer. This will optimize the plan and sends to DAG Scheduler. DAG Scheduler will create a physical plan and it divides the whole execution
+   into different stages. As part of the stages it will find out what all are the tasks that can be run on same machine, what all the tasks involves shuffling, what all
+   the tasks that can be run in parallel, what all the tasks which are independent, and base on this information it will create a DAG of stages. In other words
+   DAG is a physical plan.
+   
+12) What is Catalyst Optimizer?
+   1) What ever the spark sql we write on Dataframe or Datasets that goes under Catalyst optimizer and this optimizer will produce the optimized logical plan.
+13) Why Spark faulttolernt?
+    1) With in the cluster if any data node goes down, the RDDs on the data node will be lost. Spark is faultorent for such data loss. Spark using leneage graph can 
+    construct the lost data.
+14) Difference between RDD and Dataframe?
+    1) RDD is the basic abstraction of Spark which resilient immutable distributed collection of data. Dataframe is the Wrapper on top of RDD. What ever the data read
+    using Datasource APIs results in Dataframe. Dataframes allows us to write SQL type queries for analysing the data. What ever the operations we perform on Dataframes
+    will undergoes the Catalyst optimizer and Catalyst optimizer will generate the optimized logical plan for execution. Hence Dataframes are much faster when compared
+    to RDDs.
+    
+15) Difference between RDD, Dataframe and Dataset
+
+    1) RDD
+       a) RDD is the basic abstraction of Spark which is resilient immutable distributed collection of data.
+       b) RDDs are Type Safe. Using case class or using schema specification we can make RDDs Type safe.
+       c) RDDs are not optimized and Memory Efficient
+       d) Developer has to takecare of Optimization
+       
+    2) Dataframes
+        a) It is a wrapper on top of RDD. What ever the data read using Datasource APIs can be represented as Dataframe.
+        b) Dataframes are not Type safe
+        c) What ever the operations we perform on Dataframes are optimized by Catalyst Optimizer
+        d) These are not much memory efficient
+        e) These were slow when compared to Datasets
+        
+    3) Datasets
+        a) Datasets are Type safe and hence Spark can do a lot of Optimization
+        b) Auto Optimized
+        c) Better performance
+        d) More memory efficient
+        
+ 16) Why Dataset is Type safe?
+      1) Since Dataframes are not Type safe its difficult to handle the data analysis. (Check once in google)
+      
+ 17) Difference between Narrow and Wide Transformations
+     1) Transformations are functions that are applied on RDD and they transform the RDD into another RDD.
+     2) Transfomations are lazy eveluated, untill unless an Action is invoked Transformations will not start their execution
+     3) Examples of Narrow transformations are Map, Filter and Wide transformations are groupBy() and aggregateBy()
+     4) The transformations which don't involve shuffling are known as Narrow transformations and the transformations which shuffling is involved are known as
+        wide transformations
+ 18) Difference between map() and mapPartitions() transformations?
+ 
+     1) When we use map() whatever the function we used in the map is applied on each every row of RDD
+     2) When we use mapPartitions() whatever the functionwe used in the mapPartition() will be applied only once and it is applied at partition level
+     3) For example, if i have an RDD and for each row I need to connect to database and fetch details. Opening and closing the database is expensive
+        and in that case we can use mapPartition() where the database connection opening and closing will done once per each partition.
+ 19) Difference between Repartition() and Coalesce()
+    1) RDD, Dataframe and Datasets are partitioned and distributed across multiple nodes. In this case some partitions will have very less amount of data
+       and some partitions can have huge amount of data. This can impact the performance while processing. So, using repartition() we can divide the parition 
+       with huge amount of data into multiple smaller partitions and also can decrease the no.of paritions.
+    2) Coalesce is used to decrease the no.of paritions. Suppose if we have 400 partitions we can decrease them to some 200 partitions
+    3) Coalesce will not perform shuffling of data, it simply combine the the smaller partitions and create a single partition. Whereas repartition() will perform
+       shuffling while increasing and decreasing the no.of partitions.
+    4) It is recommended to use coalesce since it doesn't involve shuffling while combining the partitions
+    
+ 20) Difference between reduce by and group by?
+     1) reduceByKey() will use the combiner where as the groupByKey() will not use the combiner. Hence the amount of data involved in shuffling is less in case of
+       reduceByKey() , but it is huge in case of groupByKey()
+ 21) Difference between Spark rank() and dense_rank()?
+     1) Both are used to give ranking based on some quantitative fields. In case rank, if any two or more quantities are same then these quantities are given same rank
+        and the next ranks will be skipped. But in case of dense_rank(), the ranking will not skip
+     2) It's always better to explain with an example
+        
+ 22) What is shuffling and why we need it?
+     1) Spark is a distributed processing framework. So, different tasks running on different machines. To get the required result some of the data needs to transfer
+        from one machine to other. This transfering of data between the machines/executors is known as shuffling.
+ 23) What is AggregateByKey()? Difference between AggregateByKey() and CombineByKey()?
+     1) It is an operation applied on pairRDDs. It groups the data base on key and peform operation on the grouped data.
+     2) The type of output is different from the type of input. But in case of reduceByKey both the types are same.
+     3) AggregateByKey() will take three parameters
+         a) Initial value
+         b) combine function : Used to combine the data within the partition
+         c) merge function : It is used to combine the data coming from different partitions
+         
+       example :
+          val data = Seq("rama:10","sowji:20","momi:50","rama:20","sowji:30","momi:50")
+          val dataRDD = sc.parallelize(data,3)
+          val pair = dataRDD.map(x => x.split("=")).map(x => ((x(0),x(1))))
+          val initial = 0
+          val addOP = (sum:Int,newValue) => sum+newValue.toInt
+          val mergeOP = (p1:Int,p2:Int) => p1 + p2
+          val out = pair.aggregateByKey(initial)(addOP,mergeOP)
+          out.take(10)
+          
+ 24) Spark Execution Model (*****)
+     1) Spark is a Master slave architecture where Driver acts as a Master and Executors acts as slaves
+     2) Driver is the main program which is responsible for SparkContext creation.
+     3) SparkContext acts as an interface between Cluster manager and the Driver. It will negotiate with the cluster manager for resources
+     4) Once the resources are allocated, Driver will create logical plan, it creates the DAG with Stages and tasks.
+     5) These tasks will execute in the executors. Each worker machine can have multiple executors
+     6) Executors can have multiple cores for executing the tasks
+     7) Driver will send the tasks to executors for processing the data available on worker node and executors will send back the result to the Driver Program.
+     
+ 25) Difference between Cache() and persist()
+     1) In Spark, we can cache the RDD in two ways. Using cache() and persist(). If we use cache() on RDD, spark will cache the RDD in Main memory. It will use Memory_Only option.
+        If the RDD doesn't fit in memory it will ignore some part of RDD and spark spark is fault tolerent and can create the missed RDD using leneage graph when required.
+     2) When we use persist and specify the Storage level, spark depending on storage level it will cache the RDDs.
+       The different Storage levels are 
+          1) IN_MEMORY
+          
+ 26) What is Accumulator in Spark?
+     1) These are the variables used to aggregate information from executors.We can count the no.of Malformed and good records using the Accumulators.
+     
+        example :
+        
+            val data = Seq("first line","error line","second line", "error line")
+            val dataRDD = sc.parallelize(data,3)
+            val errorCount = sc.accumulator(0,"error_count")
+             val errorRecords = dataRDD.filter(rec => {
+                 if(rec.contains("error")){
+                   errorCount += 1
+                   true}
+                   else
+                   false})
+             println(errorCount)
+             
+  27) What is a broadcast variable?
+  
+     1) If we want to send some data to worker nodes, so, that the executors will use that data for processing. This process is known as broadcasting.
+     2) We can broadcast variables, small RDDs, Database connectons etc.
+     3) These are read-only variables.
+     
+     example
+     
+     val emp = Seq(("rama",1),("sowji",2),("momi",3))
+     val empRDD = sc.parallelize(emp)
+     val dep = Map(1->"fin",2->"hr",3->"school")
+     
+     val empInfo = empRDD.map(x => x._1+" ,"+x._2+" ,"+dep.value.get(x._2).get)
+         empInfo.collect.foreach(println)
+         dep.unpersist
+         dep.destroy
+         
+   28) Difference between Partitioning and Bucketing?
+       1) From Storage point of view, when data is partitioned base on a column, for every distinct value of the partitioned column there will be one folder
+          created on HDFS and the data belongs to that particular value will be stored on the particular partition.
+       2) When our data is leading to huge no.of partitions or it leads to skewness of data then it is recommended to go for Bucketing.
+       3) In Bucketing, we have to specify the column on which bucketing has to happen and to how many no.of buckets it has create. For each bucket a separate folder
+          created on HDFS. During bucketing, base on hashvalue of the coulmn used for bucketing the data is distributed across the buckets.
+       4) From data accessing point of view, when we queried the data based on Partitioned column, full table scan will not happen and it will identify the partition
+          based on the partitioned column value and gives the results.
+       5) In case of bucketing, based on bucketd column value used in the query, it will identify the bucket and fetch the data without scanning the entire table.
+       6) Since data stored in buckets are sorted, Bucketing is more efficient in joining of data
+  
+  29) What is Vectorization?
+      1) When we are processing RDDs in spark or tables in hive, process engine will process the data row by row.
+      2) Using Vectorization, we can instruct the process engine, to take bunch of rows and process them together and it increases the performance.
+      3) Vectorization is recommended with the columnar file formats
+      4) In hive for to use Vectorization we have to enable hive.vectorized.execution.enabled=true.
+  
+  30) Difference between ORC and Parquet?
+      1) Both are columnar formats
+      2) Parquet is more efficient in storing the nested data.
+      3) They will store Min and Max values of the partition
+      4) They will use Bloom filters which increases the peformance of the querires
+      5) ORC support ACID properties where as Parquet is not
+      6) ORC is more efficient in compression than Parquet
+      
+  31) Difference between Avro and Parquet?
+      1) Avro is row based format where as Parquet is a columnar format(All the data of a column are stored together)
+      2) Avro maintains the schema. so, we can evaluate the schema as and when required.
+      3) Parquet is more efficient in compression than AVRO.
+  
+  32) How to choose no.of executors and memory?
+      1) Let's assume we have 6 machines in the cluster. Each machine with 16 cores and 64 GB RAM (So the total cores in the cluster are 6*16=96 and 384 GB RAM
+      2) We should leave one core in each machine for OS process. So, we are left with 90 cores for our spark jobs
+      3) We can create 3 executors with 5 executor cores each and in total we can have 18 executors in the cluster.
+      4) Coming to memory, If we allocate 1 GB to OS then we are left with 63GB per machine. Out of 63 GB we have to allocate 2 GB for Yarn. 
+      5) Rest of the memory we can distribute evenly acorss the executors.
+  
+  33) Spark Performance Tuning
+  
+       1) Using Tree ReduceByKey instead reduceByKey.
+          a) When we use the reduceByKey all the output from the executors will send to Driver. Then driver will merge and combine the results. If we have
+          huge no.of executors then it will be a overhead to the driver in combining the results.
+          b) In this case we have to use treeReduceByKey where it will use executors for combining the results and less amount of data will be sent to Driver
+          
+       2) Using Broadcast Joins
+          a) Whenever we performing join between a smaller and larger dataset then we should go for Broadcast join whereever applicable.
+          b) We can automate broadcast joins by setting the Threshold value
+       3) If we are not using Spark 2.x then we have to go for Kryo serilizer for serilization.
+       4)Using Right File format
+          a) For analysis kind of work, it's good to with Parquet format
+          b) We have other formats like ORC,RC
+          c) If we have to read the entire row then we should go for AVRO file format
+       5) Using Right File compression
+       6) Handling the Skewed Data using the Buckets
+       7) Using Right no.of executors and executor cores
+       8) Right Memory configuration for Driver and Spark
+       9) Enabling Spark shuffle service
+       10) Avoid Data Shuffle(Choose reduceByKey instead groupByKey)
+       11) Using Vectorization(Processing the data in Batches instead row by row)
+       12) Using Bucketing
+           a) Bucket joins avoid shuffling of data
+           b) Data in buckets are already sorted and shuffled
+      13) When we are joining two larger datasets then it's better to go for bucketing joins and Vectorization
+      
+  34) What is Dynamic Resource Allocation
+     1) By default in spark dynamic resource allocation is disabled. so, the spark job will run only with the resources allocated by 
+        the cluster manager during initialization of the job. Even if resources are idel they were not allocated for job completion.
+     2) When we enable the dynamic resource allocation then our spark job can request for more resources for job completion and
+        cluster manager will assign the idel resources to job for process completion.
+     3) We need to set the below property to true.
+          spark.dynamicAllocation.enabled = true
+          spark.shuffle.service.enabled = true
+===============================================================================================================================================================================================================
+          
+  Submitting the Spark Job
+  
+  ./bin/spark2-submit --class org.apache.spark.examples.SparkPi \
+      --master yarn-client \
+      --num-executors 1 \
+      --driver-memory 512m \
+      --executor-memory 512m \
+      --executor-cores 1 \
+    examples/jars/spark-examples*.jar 10
+  
+         
+     
+    
+   

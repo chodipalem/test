@@ -1,0 +1,28 @@
+Pls share your thoughts on below secnarios in hive.
+
+1. Initially Table is empty. Suppose if we are loading 4 GB file to hive table, while the loading process is ongoing - can we access the table ? And will it reflect the data whatever loaded till that time? Pls justify your answer.
+
+2. what is your approach if any of the query/join  is long running. Need answer interms of optimisation. Provided that you are not allowed  to partition/bucket on the table.
+
+3. Hive scripts are automated and running as per the schedule. But some times you observe that queries are failing due to memory issues. How do you tackle this/workaround  in prod environment without impacting the SLA or timelines.
+
+
+Regards
+
+
+Dayanidhi Jena <jena.dayanidhi2011@gmail.com>
+1:55 PM (21 hours ago)
+to Narasimha, Hadoop 
+Hi, when we load data to hive table whether it is empty or not there will be exclusive lock will apply to the table in a non partioned table. If it is a partioned table the lock will be apply to the partioned level.when there is a exclusive or write lock you can't access hive table for read...... comming to 2nd question if a query is taking more time you can use vectorization or you can rewrite the query or you can use map side join or cost base optimization. Regarding 3rd I don't have idea.
+
+Thanks 
+Dayanidhi 
+To view this discussion on the web visit https://groups.google.com/d/msgid/hadoop-gopal-group/CAHpDYg1sS%3D4cN53XsDhbCxK4zYvtFctxnu14RSf9SUFSpaqovg%40mail.gmail.com.
+
+
+Hadoop Gopal
+5:07 PM (17 hours ago)
+to Dayanidhi, Narasimha, Hadoop 
+Hi Dayanidhi/Narasimha,
+
+    For the third question also , we can set the mapper , reducer & partition level memory before we are trigger the Hive Queries in a script level
